@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.todoapp.controller.MainController"
+            stylesheets="@../css/style.css"
+            style="-fx-font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;"
+            maxHeight="Infinity" maxWidth="Infinity">
+
+    <!-- ===================== TOP: Header & Search ===================== -->
+    <top>
+        <VBox spacing="0" styleClass="header-bar">
+            <Label text="✓ Task Tracker" styleClass="app-title"/>
+            <HBox spacing="12" styleClass="toolbar" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="🔍 Cari tugas..." prefWidth="250" HBox.hgrow="SOMETIMES"/>
+                <ChoiceBox fx:id="filterStatusChoiceBox" prefWidth="160"/>
+                <Button fx:id="newTaskButton" text="+ Tugas Baru" onAction="#handleShowNewTaskDialog"
+                        styleClass="primary-button"/>
+                <Button fx:id="refreshButton" text="↻ Refresh" onAction="#handleRefresh"
+                        styleClass="refresh-button"/>
+                <HBox HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- ===================== LEFT: Task Detail & Calendar ===================== -->
+    <left>
+        <ScrollPane fitToWidth="true" style="-fx-padding: 0; -fx-border-color: transparent;">
+            <VBox spacing="16" styleClass="form-panel detail-panel" maxWidth="380" minWidth="300">
+                <padding>
+                    <Insets top="20" right="18" bottom="20" left="18"/>
+                </padding>
+
+                <Label fx:id="detailSectionLabel" text="Detail Tugas" styleClass="section-title"/>
+
+                <VBox fx:id="detailCard" spacing="6" styleClass="detail-card">
+                    <Label fx:id="detailTitleLabel" text="Pilih tugas dari tabel" styleClass="detail-title" wrapText="true"/>
+                    <Label fx:id="detailMetaLabel" text="Detail tugas akan muncul di sini." styleClass="detail-meta" wrapText="true"/>
+                </VBox>
+
+                <GridPane fx:id="detailFactsGrid" hgap="10" vgap="10" styleClass="detail-facts-grid">
+                    <Label text="Kategori" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="detailCategoryLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="Deadline" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="detailDeadlineLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Prioritas" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="detailPriorityLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Status" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="detailStatusLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text="Lampiran" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Label fx:id="detailAttachmentLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                </GridPane>
+
+                <VBox fx:id="detailDescriptionBox" spacing="8">
+                    <Label text="Deskripsi" styleClass="field-label"/>
+                    <TextArea fx:id="detailDescriptionArea" editable="false" wrapText="true"
+                              prefRowCount="3" maxWidth="Infinity"/>
+                </VBox>
+
+                <Button fx:id="editTaskButton" text="Edit Tugas" onAction="#handleShowEditTaskDialog"
+                        maxWidth="Infinity" disable="true"/>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <VBox spacing="10" styleClass="calendar-panel">
+                    <HBox spacing="8" alignment="CENTER">
+                        <Button text="‹" onAction="#handlePreviousMonth" styleClass="calendar-nav-button"/>
+                        <Label fx:id="calendarTitleLabel" text="Kalender" styleClass="calendar-title" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="›" onAction="#handleNextMonth" styleClass="calendar-nav-button"/>
+                    </HBox>
+                    <GridPane fx:id="deadlineCalendarGrid" hgap="6" vgap="6" styleClass="calendar-grid"/>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </left>
+
+    <!-- ===================== CENTER: Table List Task (Responsive) ===================== -->
+    <center>
+        <VBox spacing="14" VBox.vgrow="ALWAYS">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <TableView fx:id="taskTableView" VBox.vgrow="ALWAYS" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="titleColumn" text="Judul Tugas" prefWidth="180" minWidth="120"/>
+                    <TableColumn fx:id="categoryColumn" text="Kategori" prefWidth="110" minWidth="80"/>
+                    <TableColumn fx:id="deadlineColumn" text="Tenggat Waktu" prefWidth="130" minWidth="100"/>
+                    <TableColumn fx:id="priorityColumn" text="Prioritas" prefWidth="100" minWidth="80"/>
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="110" minWidth="80"/>
+                    <TableColumn fx:id="attachmentColumn" text="Lampiran" prefWidth="120" minWidth="90"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="openAttachmentButton" text="📂 Buka Lampiran" onAction="#handleOpenAttachment"/>
+                <Button fx:id="deleteButton" text="🗑 Hapus Tugas" onAction="#handleDeleteTask" styleClass="danger-button"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- ===================== BOTTOM: Status Bar ===================== -->
+    <bottom>
+        <HBox styleClass="status-bar" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="8" right="20" bottom="8" left="20"/>
+            </padding>
+            <Label fx:id="statusBarLabel" text="Siap."/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

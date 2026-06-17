@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run MainApp (JavaFX)",
+            "request": "launch",
+            "mainClass": "com.todoapp.MainApp",
+            "projectName": "todo-app",
+            "vmArgs": "--module-path \"${env:JAVAFX_HOME}\\lib\" --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

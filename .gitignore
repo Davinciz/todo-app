@@ -1,0 +1,22 @@
+# Maven
+target/
+
+# Compiled class files
+*.class
+
+# IDE
+.vscode/*.log
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database lokal (jangan commit data pribadi)
+data/*.db
+data/attachments/*
+!data/attachments/.gitkeep
+
+# Logs
+*.log
