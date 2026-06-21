@@ -3,6 +3,8 @@ package com.todoapp.controller;
 import com.todoapp.dao.TaskDAO;
 import com.todoapp.model.Task;
 import com.todoapp.util.FileAttachmentManager;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,11 +14,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +31,23 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
 public class MainController {
+    private static final String THEME_DARK = "theme-dark";
+    private static final String THEME_LIGHT = "theme-light";
+    private static final String PREF_THEME = "theme";
+    private static final String PREF_NOTIFICATION_STYLE = "notificationStyle";
+    private static final String NOTIFICATION_STYLE_MINIMAL = "Minimal";
+    private static final String NOTIFICATION_STYLE_ACCENT = "Aksen";
+    private static final String NOTIFICATION_STYLE_URGENT = "Urgent";
+
+    @FXML private BorderPane rootPane;
 
     // --- Dialog form fields ---
     private TextField titleField;
@@ -48,10 +66,12 @@ public class MainController {
     @FXML private Button refreshButton;
     @FXML private Button newTaskButton;
     @FXML private Button editTaskButton;
+    @FXML private Button themeToggleButton;
 
     // --- Search & filter ---
     @FXML private TextField searchField;
     @FXML private ChoiceBox<String> filterStatusChoiceBox;
+    @FXML private ChoiceBox<String> notificationStyleChoiceBox;
 
     // --- Detail panel & calendar ---
     @FXML private Label detailSectionLabel;
@@ -68,6 +88,9 @@ public class MainController {
     @FXML private TextArea detailDescriptionArea;
     @FXML private Label calendarTitleLabel;
     @FXML private GridPane deadlineCalendarGrid;
+    @FXML private VBox deadlinePreviewBox;
+    @FXML private Label deadlinePreviewTitleLabel;
+    @FXML private VBox deadlinePreviewList;
 
     // --- Table ---
     @FXML private TableView<Task> taskTableView;
@@ -90,13 +113,19 @@ public class MainController {
     private String pendingAttachmentPath = null;
     private String pendingAttachmentName = null;
     private YearMonth visibleCalendarMonth = YearMonth.now();
+    private LocalDate selectedCalendarDate = null;
+    private String currentTheme;
+    private final Preferences preferences = Preferences.userNodeForPackage(MainController.class);
+    private final Set<String> shownDeadlineNotificationKeys = new HashSet<>();
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private static final DateTimeFormatter MONTH_FORMAT = DateTimeFormatter.ofPattern("MMMM yyyy");
 
     @FXML
     public void initialize() {
+        setupTheme();
         setupFilterChoiceBox();
+        setupNotificationStyleChoiceBox();
         setupTableColumns();
         setupTableSelectionListener();
         setupSearchListener();
@@ -109,12 +138,53 @@ public class MainController {
     // SETUP
     // =========================================================
 
+    private void setupTheme() {
+        currentTheme = preferences.get(PREF_THEME, THEME_DARK);
+        applyTheme(currentTheme);
+    }
+
+    private void applyTheme(String theme) {
+        if (!THEME_LIGHT.equals(theme)) {
+            theme = THEME_DARK;
+        }
+
+        currentTheme = theme;
+        rootPane.getStyleClass().removeAll(THEME_DARK, THEME_LIGHT);
+        rootPane.getStyleClass().add(currentTheme);
+        themeToggleButton.setText(THEME_DARK.equals(currentTheme) ? "☀" : "☾");
+        themeToggleButton.setTooltip(new Tooltip(
+                THEME_DARK.equals(currentTheme) ? "Ganti ke tema terang" : "Ganti ke tema gelap"
+        ));
+        preferences.put(PREF_THEME, currentTheme);
+    }
+
     private void setupFilterChoiceBox() {
         filterStatusChoiceBox.setItems(FXCollections.observableArrayList(
                 "Semua", "PENDING", "IN_PROGRESS", "DONE"
         ));
         filterStatusChoiceBox.setValue("Semua");
         filterStatusChoiceBox.setOnAction(e -> applyFilter());
+    }
+
+    private void setupNotificationStyleChoiceBox() {
+        notificationStyleChoiceBox.setItems(FXCollections.observableArrayList(
+                NOTIFICATION_STYLE_ACCENT,
+                NOTIFICATION_STYLE_MINIMAL,
+                NOTIFICATION_STYLE_URGENT
+        ));
+        notificationStyleChoiceBox.setValue(
+                preferences.get(PREF_NOTIFICATION_STYLE, NOTIFICATION_STYLE_ACCENT)
+        );
+        notificationStyleChoiceBox.setTooltip(new Tooltip("Style notifikasi deadline"));
+        notificationStyleChoiceBox.setOnAction(event -> {
+            String style = notificationStyleChoiceBox.getValue();
+            preferences.put(PREF_NOTIFICATION_STYLE, style);
+            showNotificationToast(
+                    "Style notifikasi: " + style,
+                    "Pengingat deadline berikutnya akan memakai style ini.",
+                    style
+            );
+        });
     }
 
     private void setupTableColumns() {
@@ -181,7 +251,9 @@ public class MainController {
         try {
             List<Task> tasks = taskDAO.getAllTasks();
             taskList.setAll(tasks);
+            clearDeadlinePreview();
             renderDeadlineCalendar();
+            showDeadlineNotifications(tasks);
             setStatus("Berhasil memuat " + tasks.size() + " tugas.");
         } catch (Exception e) {
             showError("Gagal memuat data", e.getMessage());
@@ -205,6 +277,7 @@ public class MainController {
             }
 
             taskList.setAll(result);
+            clearDeadlinePreview();
             renderDeadlineCalendar();
         } catch (Exception e) {
             showError("Gagal memfilter data", e.getMessage());
@@ -241,6 +314,7 @@ public class MainController {
         dialog.getDialogPane().getStylesheets().add(
                 getClass().getResource("/css/style.css").toExternalForm()
         );
+        dialog.getDialogPane().getStyleClass().add(currentTheme);
         dialog.getDialogPane().setContent(form);
 
         ButtonType saveType = new ButtonType("Simpan", ButtonBar.ButtonData.OK_DONE);
@@ -413,6 +487,11 @@ public class MainController {
         loadAllTasks();
     }
 
+    @FXML
+    private void handleToggleTheme() {
+        applyTheme(THEME_DARK.equals(currentTheme) ? THEME_LIGHT : THEME_DARK);
+    }
+
     // =========================================================
     // ATTACHMENT HANDLING
     // =========================================================
@@ -481,6 +560,7 @@ public class MainController {
         setDetailVisible(hasTask);
 
         if (!hasTask) {
+            detailCard.getStyleClass().removeAll("detail-overdue", "detail-done");
             detailTitleLabel.setText("Pilih tugas dari tabel");
             detailMetaLabel.setText("Detail tugas akan muncul di sini.");
             detailCategoryLabel.setText("-");
@@ -597,12 +677,14 @@ public class MainController {
     @FXML
     private void handlePreviousMonth() {
         visibleCalendarMonth = visibleCalendarMonth.minusMonths(1);
+        clearDeadlinePreview();
         renderDeadlineCalendar();
     }
 
     @FXML
     private void handleNextMonth() {
         visibleCalendarMonth = visibleCalendarMonth.plusMonths(1);
+        clearDeadlinePreview();
         renderDeadlineCalendar();
     }
 
@@ -642,7 +724,7 @@ public class MainController {
         Label dayNumber = new Label(String.valueOf(date.getDayOfMonth()));
         dayNumber.getStyleClass().add("calendar-day-number");
 
-        Label marker = new Label(deadlineCount > 0 ? "●" : "");
+        Label marker = new Label(formatDeadlineMarker(deadlineCount));
         marker.getStyleClass().add("calendar-deadline-marker");
 
         VBox cell = new VBox(1, dayNumber, marker);
@@ -650,6 +732,9 @@ public class MainController {
         cell.getStyleClass().add("calendar-cell");
         if (date.equals(LocalDate.now())) {
             cell.getStyleClass().add("today-cell");
+        }
+        if (date.equals(selectedCalendarDate)) {
+            cell.getStyleClass().add("selected-date-cell");
         }
         if (deadlineCount > 0) {
             cell.getStyleClass().add("deadline-cell");
@@ -661,29 +746,196 @@ public class MainController {
     }
 
     private Map<LocalDate, Long> getDeadlineCounts() {
-        try {
-            return taskDAO.getAllTasks().stream()
-                    .filter(task -> task.getDeadline() != null)
-                    .collect(Collectors.groupingBy(Task::getDeadline, HashMap::new, Collectors.counting()));
-        } catch (Exception e) {
-            setStatus("Gagal memuat kalender deadline: " + e.getMessage());
-            return new HashMap<>();
-        }
+        return taskList.stream()
+                .filter(task -> task.getDeadline() != null)
+                .collect(Collectors.groupingBy(Task::getDeadline, HashMap::new, Collectors.counting()));
     }
 
     private void showTasksForDate(LocalDate date) {
+        selectedCalendarDate = date;
+        renderDeadlineCalendar();
+
         List<Task> tasksOnDate = taskList.stream()
                 .filter(task -> date.equals(task.getDeadline()))
                 .toList();
 
         if (tasksOnDate.isEmpty()) {
+            clearDeadlinePreview();
             setStatus("Tidak ada deadline pada " + date.format(DATE_FORMAT) + ".");
             return;
         }
 
-        taskTableView.getSelectionModel().select(tasksOnDate.get(0));
-        taskTableView.scrollTo(tasksOnDate.get(0));
+        showDeadlinePreview(date, tasksOnDate);
+        if (tasksOnDate.size() == 1) {
+            selectTask(tasksOnDate.get(0));
+        }
         setStatus(tasksOnDate.size() + " deadline pada " + date.format(DATE_FORMAT) + ".");
+    }
+
+    private String formatDeadlineMarker(long deadlineCount) {
+        if (deadlineCount <= 0) {
+            return "";
+        }
+        return "●";
+    }
+
+    private void showDeadlinePreview(LocalDate date, List<Task> tasksOnDate) {
+        if (deadlinePreviewBox == null || deadlinePreviewTitleLabel == null || deadlinePreviewList == null) {
+            return;
+        }
+
+        deadlinePreviewTitleLabel.setText("Deadline " + date.format(DATE_FORMAT) + " (" + tasksOnDate.size() + ")");
+        deadlinePreviewList.getChildren().clear();
+
+        for (Task task : tasksOnDate) {
+            deadlinePreviewList.getChildren().add(createDeadlinePreviewItem(task));
+        }
+
+        deadlinePreviewBox.setVisible(true);
+        deadlinePreviewBox.setManaged(true);
+    }
+
+    private VBox createDeadlinePreviewItem(Task task) {
+        Label title = new Label(task.getTitle());
+        title.getStyleClass().add("deadline-preview-item-title");
+        title.setWrapText(true);
+
+        Label meta = new Label(getPreviewMeta(task));
+        meta.getStyleClass().add("deadline-preview-item-meta");
+        meta.setWrapText(true);
+
+        Label status = new Label(task.getStatus().name());
+        applyBadgeStyle(status, "status", task.getStatus().name());
+
+        HBox header = new HBox(8, title, status);
+        header.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(title, Priority.ALWAYS);
+
+        VBox item = new VBox(4, header, meta);
+        item.getStyleClass().add("deadline-preview-item");
+        item.setMaxWidth(Double.MAX_VALUE);
+        item.setOnMouseClicked(event -> selectTask(task));
+        return item;
+    }
+
+    private String getPreviewMeta(Task task) {
+        String category = isBlank(task.getCategory()) ? "Tanpa kategori" : task.getCategory();
+        return category + " • " + task.getPriority().name();
+    }
+
+    private void clearDeadlinePreview() {
+        if (deadlinePreviewBox == null || deadlinePreviewList == null) {
+            return;
+        }
+        deadlinePreviewList.getChildren().clear();
+        deadlinePreviewBox.setVisible(false);
+        deadlinePreviewBox.setManaged(false);
+    }
+
+    private void selectTask(Task task) {
+        taskTableView.getSelectionModel().select(task);
+        taskTableView.scrollTo(task);
+        updateDetailPanel(task);
+    }
+
+    private void showDeadlineNotifications(List<Task> tasks) {
+        List<Task> dueSoonTasks = tasks.stream()
+                .filter(this::shouldNotifyDeadline)
+                .toList();
+
+        if (dueSoonTasks.isEmpty()) {
+            return;
+        }
+
+        String key = dueSoonTasks.stream()
+                .map(task -> task.getId() + ":" + task.getDeadline())
+                .collect(Collectors.joining("|"));
+        if (!shownDeadlineNotificationKeys.add(key)) {
+            return;
+        }
+
+        String title = dueSoonTasks.size() == 1
+                ? "Deadline kurang dari 1 hari"
+                : dueSoonTasks.size() + " tugas mendekati deadline";
+        String message = buildDeadlineNotificationMessage(dueSoonTasks);
+        Platform.runLater(() -> showNotificationToast(
+                title,
+                message,
+                notificationStyleChoiceBox.getValue()
+        ));
+    }
+
+    private boolean shouldNotifyDeadline(Task task) {
+        if (task == null || task.getDeadline() == null || task.getStatus() == Task.Status.DONE) {
+            return false;
+        }
+
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        return !task.getDeadline().isBefore(today) && !task.getDeadline().isAfter(tomorrow);
+    }
+
+    private String buildDeadlineNotificationMessage(List<Task> tasks) {
+        if (tasks.size() == 1) {
+            Task task = tasks.get(0);
+            return task.getTitle() + " - deadline " + task.getDeadline().format(DATE_FORMAT) + ".";
+        }
+
+        String titles = tasks.stream()
+                .limit(3)
+                .map(Task::getTitle)
+                .collect(Collectors.joining(", "));
+        int remaining = tasks.size() - 3;
+        return remaining > 0 ? titles + ", dan " + remaining + " lainnya." : titles + ".";
+    }
+
+    private void showNotificationToast(String title, String message, String style) {
+        if (rootPane.getScene() == null || rootPane.getScene().getWindow() == null) {
+            return;
+        }
+
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("notification-title");
+
+        Label messageLabel = new Label(message);
+        messageLabel.getStyleClass().add("notification-message");
+        messageLabel.setWrapText(true);
+
+        Button closeButton = new Button("x");
+        closeButton.getStyleClass().add("notification-close-button");
+
+        HBox header = new HBox(10, titleLabel, closeButton);
+        header.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(titleLabel, Priority.ALWAYS);
+
+        VBox content = new VBox(6, header, messageLabel);
+        content.getStyleClass().addAll("notification-toast", getNotificationStyleClass(style));
+        content.getStyleClass().add(currentTheme);
+        content.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+        content.setPrefWidth(340);
+
+        Popup popup = new Popup();
+        popup.setAutoFix(true);
+        popup.setAutoHide(true);
+        popup.getContent().add(content);
+        closeButton.setOnAction(event -> popup.hide());
+
+        Window window = rootPane.getScene().getWindow();
+        popup.show(window);
+        popup.setX(window.getX() + window.getWidth() - content.getPrefWidth() - 28);
+        popup.setY(window.getY() + 76);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(6));
+        delay.setOnFinished(event -> popup.hide());
+        delay.play();
+    }
+
+    private String getNotificationStyleClass(String style) {
+        return switch (style) {
+            case NOTIFICATION_STYLE_MINIMAL -> "notification-minimal";
+            case NOTIFICATION_STYLE_URGENT -> "notification-urgent";
+            default -> "notification-accent";
+        };
     }
 
     private boolean isBlank(String value) {

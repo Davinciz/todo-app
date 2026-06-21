@@ -17,10 +17,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.todoapp.controller.MainController"
             stylesheets="@../css/style.css"
-            style="-fx-font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;"
             maxHeight="Infinity" maxWidth="Infinity">
 
     <!-- ===================== TOP: Header & Search ===================== -->
@@ -34,7 +33,11 @@
                         styleClass="primary-button"/>
                 <Button fx:id="refreshButton" text="↻ Refresh" onAction="#handleRefresh"
                         styleClass="refresh-button"/>
-                <HBox HBox.hgrow="ALWAYS"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <ChoiceBox fx:id="notificationStyleChoiceBox" prefWidth="130"
+                           styleClass="notification-style-choice"/>
+                <Button fx:id="themeToggleButton" onAction="#handleToggleTheme"
+                        styleClass="theme-toggle-button"/>
             </HBox>
         </VBox>
     </top>
@@ -89,6 +92,11 @@
                         <Button text="›" onAction="#handleNextMonth" styleClass="calendar-nav-button"/>
                     </HBox>
                     <GridPane fx:id="deadlineCalendarGrid" hgap="6" vgap="6" styleClass="calendar-grid"/>
+                </VBox>
+
+                <VBox fx:id="deadlinePreviewBox" spacing="8" styleClass="deadline-preview-panel" visible="false" managed="false">
+                    <Label fx:id="deadlinePreviewTitleLabel" text="Preview Deadline" styleClass="deadline-preview-title"/>
+                    <VBox fx:id="deadlinePreviewList" spacing="6"/>
                 </VBox>
             </VBox>
         </ScrollPane>
