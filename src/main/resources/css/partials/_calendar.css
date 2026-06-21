@@ -1,0 +1,97 @@
+/* ===================== Detail Calendar ===================== */
+.calendar-panel {
+  -fx-padding: 12;
+}
+
+.calendar-title {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 13px;
+  -fx-font-weight: bold;
+  -fx-alignment: center;
+}
+
+.calendar-weekday {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+  -fx-alignment: center;
+}
+
+.calendar-cell {
+  -fx-min-width: 36;
+  -fx-pref-width: 36;
+  -fx-min-height: 36;
+  -fx-pref-height: 36;
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+  -fx-cursor: hand;
+}
+
+.calendar-cell:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+}
+
+.calendar-day-number {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-family: "Consolas", "Courier New", monospace;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.calendar-deadline-marker {
+  -fx-text-fill: -app-accent-primary;
+  -fx-font-size: 8px;
+}
+
+.calendar-cell.deadline-cell {
+  -fx-background-color: -app-elevated;
+}
+
+.calendar-cell.today-cell {
+  -fx-border-color: -app-text-primary;
+}
+
+.calendar-cell.selected-date-cell {
+  -fx-border-color: -app-accent-primary;
+  -fx-border-width: 2;
+}
+
+/* --- Deadline preview list (muncul saat tanggal kalender diklik) --- */
+.deadline-preview-panel {
+  -fx-padding: 12;
+}
+
+.deadline-preview-title,
+.deadline-preview-item-title {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-weight: bold;
+}
+
+.deadline-preview-title {
+  -fx-font-size: 13px;
+}
+
+.deadline-preview-item {
+  -fx-padding: 10;
+  -fx-cursor: hand;
+}
+
+.deadline-preview-item:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+}
+
+.deadline-preview-item-title {
+  -fx-font-size: 12px;
+}
+
+.deadline-preview-item-meta {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 11px;
+}

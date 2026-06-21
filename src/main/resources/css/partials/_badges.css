@@ -1,0 +1,39 @@
+/* ===================== Badges (priority & status) ===================== */
+.badge {
+  -fx-background-radius: 7;
+  -fx-border-radius: 7;
+  -fx-border-width: 0;
+  -fx-padding: 3 10 3 10;
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+}
+
+.priority-high {
+  -fx-background-color: -badge-high-bg;
+  -fx-text-fill: -badge-high-text;
+}
+
+.priority-medium {
+  -fx-background-color: -badge-medium-bg;
+  -fx-text-fill: -badge-medium-text;
+}
+
+.priority-low {
+  -fx-background-color: -badge-low-bg;
+  -fx-text-fill: -badge-low-text;
+}
+
+.status-pending {
+  -fx-background-color: -badge-pending-bg;
+  -fx-text-fill: -badge-pending-text;
+}
+
+.status-progress {
+  -fx-background-color: -badge-progress-bg;
+  -fx-text-fill: -badge-progress-text;
+}
+
+.status-done {
+  -fx-background-color: -badge-done-bg;
+  -fx-text-fill: -badge-done-text;
+}

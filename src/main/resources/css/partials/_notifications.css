@@ -1,0 +1,60 @@
+/* ===================== Notification Toast ===================== */
+.notification-toast {
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+  -fx-padding: 12 14 12 14;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.24), 18, 0, 0, 6);
+}
+
+.notification-accent {
+  -fx-border-color: -app-accent-primary;
+  -fx-border-width: 0 0 0 4;
+}
+
+.notification-minimal {
+  -fx-background-color: -app-elevated;
+}
+
+.notification-urgent {
+  -fx-background-color: -badge-high-bg;
+  -fx-border-color: -badge-high-text;
+  -fx-border-width: 0 0 0 4;
+}
+
+.notification-title {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 13px;
+  -fx-font-weight: bold;
+}
+
+.notification-message {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.notification-urgent .notification-title,
+.notification-urgent .notification-message {
+  -fx-text-fill: -badge-high-text;
+}
+
+.notification-close-button {
+  -fx-min-width: 26;
+  -fx-pref-width: 26;
+  -fx-min-height: 26;
+  -fx-pref-height: 26;
+  -fx-padding: 0;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 12px;
+}
+
+.notification-close-button:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-border;
+  -fx-text-fill: -app-text-primary;
+}

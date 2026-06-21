@@ -1,0 +1,15 @@
+/* ===================== Dialog Form (create/edit task) ===================== */
+.task-dialog,
+.task-dialog > .content,
+.task-dialog .button-bar,
+.task-dialog .dialog-form {
+  -fx-background-color: -app-surface;
+}
+
+.dialog-pane .header-panel {
+  -fx-background-color: -app-elevated;
+}
+
+.dialog-pane .content.label {
+  -fx-text-fill: -app-text-primary;
+}

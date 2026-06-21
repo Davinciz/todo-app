@@ -1,0 +1,16 @@
+/* ===================== Root & General ===================== */
+.root {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-font-weight: bold;
+  -fx-background-color: -app-background;
+}
+
+.label {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-weight: bold;
+}
+
+/* Util: dipakai untuk tanggal, kode kategori, dan angka tabel */
+.mono-cell {
+  -fx-font-family: "Consolas", "Courier New", monospace;
+}

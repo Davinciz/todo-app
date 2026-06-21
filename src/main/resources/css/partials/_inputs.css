@@ -1,0 +1,126 @@
+/* ===================== Header (toolbar layout) ===================== */
+.header-bar {
+  -fx-background-color: -app-background;
+  -fx-border-color: -app-border;
+  -fx-border-width: 0 0 1 0;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 14, 0, 0, 4);
+}
+
+.app-title {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-text-fill: -app-accent-primary;
+  -fx-font-size: 26px;
+  -fx-font-weight: bold;
+  -fx-padding: 14 15 10 15;
+}
+
+.toolbar {
+  -fx-padding: 0 15 14 15;
+  -fx-spacing: 12;
+}
+
+/* ===================== Inputs: text-field, text-area, choice-box, date-picker ===================== */
+.toolbar .text-field,
+.toolbar .choice-box,
+.form-panel .text-field,
+.form-panel .text-area,
+.form-panel .date-picker,
+.form-panel .choice-box,
+.dialog-form .text-field,
+.dialog-form .text-area,
+.dialog-form .date-picker,
+.dialog-form .choice-box {
+  -fx-background-radius: 8;
+  -fx-background-color: -app-surface;
+  -fx-text-fill: -app-text-primary;
+  -fx-border-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-width: 1;
+  -fx-padding: 8 12 8 12;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.text-field,
+.text-area {
+  -fx-prompt-text-fill: -app-text-secondary;
+}
+
+.text-input {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-weight: bold;
+  -fx-highlight-fill: -app-accent-primary;
+  -fx-highlight-text-fill: #ffffff;
+}
+
+.text-area .content {
+  -fx-background-color: -app-surface;
+}
+
+.choice-box .label {
+  -fx-text-fill: -app-text-primary;
+}
+
+.choice-box .context-menu {
+  -fx-background-color: -app-surface;
+  -fx-border-color: -app-border;
+}
+
+.choice-box .menu-item:focused {
+  -fx-background-color: -app-elevated;
+}
+
+.choice-box .menu-item > .label {
+  -fx-text-fill: -app-text-primary;
+}
+
+.toolbar .text-field:focused,
+.toolbar .choice-box:focused,
+.form-panel .text-field:focused,
+.form-panel .text-area:focused,
+.form-panel .date-picker:focused,
+.form-panel .choice-box:focused,
+.dialog-form .text-field:focused,
+.dialog-form .text-area:focused,
+.dialog-form .date-picker:focused,
+.dialog-form .choice-box:focused {
+  -fx-border-color: -app-accent-primary;
+  -fx-effect: dropshadow(gaussian, -app-accent-primary, 8, 0, 0, 0);
+}
+
+/* ===================== DatePicker & Calendar Popup ===================== */
+.date-picker .arrow-button {
+  -fx-background-color: -app-elevated;
+  -fx-background-radius: 0 8 8 0;
+}
+
+.date-picker .arrow-button .arrow {
+  -fx-background-color: -app-text-secondary;
+}
+
+.date-picker-popup,
+.date-picker-popup .month-year-pane {
+  -fx-background-color: -app-surface;
+  -fx-border-color: -app-border;
+}
+
+.date-picker-popup .month-year-pane .label,
+.date-picker-popup .week-number-cell,
+.date-picker-popup .day-name-cell {
+  -fx-text-fill: -app-text-secondary;
+}
+
+.date-picker-popup .day-cell {
+  -fx-background-color: -app-surface;
+  -fx-text-fill: -app-text-primary;
+  -fx-border-color: -app-border;
+}
+
+.date-picker-popup .day-cell:hover {
+  -fx-background-color: -app-elevated;
+}
+
+.date-picker-popup .selected {
+  -fx-background-color: -app-accent-primary;
+  -fx-text-fill: #ffffff;
+}

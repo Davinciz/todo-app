@@ -1,0 +1,93 @@
+/* ===================== Buttons ===================== */
+.button {
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-cursor: hand;
+  -fx-padding: 8 16 8 16;
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-border-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-width: 1;
+}
+
+.button:hover,
+.refresh-button:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+}
+
+.button:pressed {
+  -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.22), 4, 0, 0, 1);
+}
+
+.primary-button {
+  -fx-background-color: -app-accent-primary;
+  -fx-text-fill: #ffffff;
+  -fx-font-weight: bold;
+  -fx-border-color: -app-accent-primary;
+}
+
+.primary-button:hover {
+  -fx-background-color: -app-accent-hover;
+  -fx-border-color: -app-accent-hover;
+}
+
+.refresh-button {
+  -fx-background-color: transparent;
+  -fx-text-fill: -app-text-primary;
+  -fx-border-color: -app-border;
+}
+
+.danger-button {
+  -fx-background-color: -badge-high-bg;
+  -fx-text-fill: -badge-high-text;
+  -fx-font-weight: bold;
+  -fx-border-color: -badge-high-text;
+}
+
+.danger-button:hover {
+  -fx-background-color: -badge-high-text;
+  -fx-text-fill: #ffffff;
+  -fx-border-color: -badge-high-text;
+}
+
+.theme-toggle-button {
+  -fx-min-width: 36;
+  -fx-pref-width: 36;
+  -fx-min-height: 36;
+  -fx-pref-height: 36;
+  -fx-padding: 0;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-background-color: -app-elevated;
+  -fx-text-fill: -app-accent-primary;
+  -fx-border-color: -app-border;
+}
+
+.theme-toggle-button:hover {
+  -fx-background-color: -app-accent-primary;
+  -fx-text-fill: #ffffff;
+  -fx-border-color: -app-accent-primary;
+}
+
+.notification-style-choice {
+  -fx-background-color: -app-surface;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-background-radius: 8;
+  -fx-padding: 6 8 6 8;
+}
+
+.notification-style-choice:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+}
+
+.calendar-nav-button {
+  -fx-min-width: 32;
+  -fx-pref-width: 32;
+  -fx-padding: 5 0 5 0;
+  -fx-font-size: 15px;
+}

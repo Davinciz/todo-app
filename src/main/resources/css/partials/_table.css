@@ -1,0 +1,81 @@
+/* ===================== Table ===================== */
+.table-view {
+  -fx-background-color: -app-surface;
+  -fx-control-inner-background: -app-surface;
+  -fx-table-cell-border-color: -app-border;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 10;
+  -fx-border-width: 1;
+}
+
+.table-view .column-header-background,
+.table-view .filler {
+  -fx-background-color: -app-elevated;
+}
+
+.table-view .column-header-background .label {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-weight: bold;
+  -fx-font-size: 12px;
+}
+
+.table-view .column-header {
+  -fx-padding: 12 10 12 10;
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-border;
+}
+
+.table-row-cell {
+  -fx-background-color: -app-surface;
+  -fx-padding: 8 0 8 0;
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-border-color: -app-border;
+  -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+  -fx-background-color: -app-surface;
+}
+
+.table-cell {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-weight: bold;
+  -fx-border-color: -app-border;
+  -fx-border-width: 0 1 0 0;
+}
+
+.table-row-cell:hover {
+  -fx-background-color: -app-elevated;
+}
+
+.table-row-cell:selected {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+  -fx-border-width: 0 0 0 3;
+  -fx-font-weight: bold;
+}
+
+.table-row-cell:empty,
+.table-row-cell:empty:hover {
+  -fx-background-color: -app-surface;
+  -fx-border-color: transparent;
+}
+
+.table-row-cell.overdue-row {
+  -fx-background-color: -row-flag-high;
+  -fx-border-color: -badge-high-text;
+  -fx-border-width: 0 0 0 3;
+}
+
+.table-row-cell.done-row {
+  -fx-background-color: -row-flag-done;
+  -fx-border-color: -badge-done-text;
+  -fx-border-width: 0 0 0 3;
+}
+
+.table-row-cell.overdue-row:selected,
+.table-row-cell.done-row:selected {
+  -fx-border-color: -app-accent-primary;
+}

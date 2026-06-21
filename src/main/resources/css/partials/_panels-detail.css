@@ -1,0 +1,95 @@
+/* ===================== Panels & Detail ===================== */
+.form-panel {
+  -fx-background-color: -app-surface;
+  -fx-border-color: -app-border;
+  -fx-border-width: 0 1 0 0;
+}
+
+.section-title {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -app-accent-primary;
+  -fx-padding: 0 0 8 0;
+}
+
+.field-label,
+.attachment-label,
+.detail-meta,
+.detail-fact-name {
+  -fx-text-fill: -app-text-secondary;
+}
+
+.field-label {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+}
+
+.attachment-label {
+  -fx-font-size: 11px;
+  -fx-font-style: italic;
+}
+
+.detail-panel {
+  -fx-pref-width: 340;
+}
+
+.detail-card,
+.detail-facts-grid,
+.calendar-panel,
+.deadline-preview-panel,
+.deadline-preview-item {
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+}
+
+.detail-card {
+  -fx-padding: 14;
+}
+
+.detail-title {
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -app-accent-primary;
+}
+
+.detail-meta {
+  -fx-font-size: 12px;
+  -fx-line-spacing: 2;
+}
+
+.detail-facts-grid {
+  -fx-padding: 12;
+}
+
+.detail-fact-name {
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-min-width: 72;
+}
+
+.detail-fact-value {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+}
+
+.detail-panel .text-area {
+  -fx-min-height: 88;
+  -fx-pref-height: 96;
+  -fx-max-height: 112;
+}
+
+.detail-overdue {
+  -fx-background-color: -row-flag-high;
+  -fx-border-color: -badge-high-text;
+}
+
+.detail-done {
+  -fx-background-color: -row-flag-done;
+  -fx-border-color: -badge-done-text;
+}

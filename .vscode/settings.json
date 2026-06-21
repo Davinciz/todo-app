@@ -1,9 +1,10 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic",
-    "maven.executable.path": "mvn",
-    "java.debug.settings.hotCodeReplace": "auto",
-    "files.exclude": {
-        "**/target": true
-    }
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "maven.executable.path": "mvn",
+  "java.debug.settings.hotCodeReplace": "auto",
+  "css.lint.vendorPrefix": "ignore",
+  "files.exclude": {
+    "**/target": true
+  }
 }

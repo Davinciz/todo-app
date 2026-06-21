@@ -1,0 +1,61 @@
+/* ===================== Theme Tokens ===================== */
+/* HARUS di-import paling pertama di style.css — semua partial lain
+   memakai variabel -app-* dan -badge-* / -row-flag-* yang didefinisikan di sini.
+
+   Tema: Claymorphism, accent hijau, light mode hangat/krem,
+   dark mode abu netral (bukan biru-ungu). */
+
+.root,
+.theme-dark {
+  -app-background: #1a1a1c;
+  -app-surface: #212124;
+  -app-elevated: #2a2a2e;
+  -app-border: #34343a;
+  -app-text-primary: #f0f0f2;
+  -app-text-secondary: #9b9ba2;
+  -app-accent-primary: #34d976;
+  -app-accent-hover: #4ee88c;
+
+  -badge-high-bg: #3a2228;
+  -badge-high-text: #f5a7b6;
+  -badge-medium-bg: #3a3120;
+  -badge-medium-text: #f0c878;
+  -badge-low-bg: #1c352a;
+  -badge-low-text: #7fe3b0;
+  -badge-pending-bg: #2c2c31;
+  -badge-pending-text: #a8a8b0;
+  -badge-progress-bg: #1f2c42;
+  -badge-progress-text: #93b8f5;
+  -badge-done-bg: #1a3324;
+  -badge-done-text: #6fe096;
+
+  -row-flag-high: rgba(245, 167, 182, 0.07);
+  -row-flag-done: rgba(111, 224, 150, 0.07);
+}
+
+.theme-light {
+  -app-background: #fdfbf8;
+  -app-surface: #ffffff;
+  -app-elevated: #f4efe8;
+  -app-border: #e7e2da;
+  -app-text-primary: #1c1b1a;
+  -app-text-secondary: #76726a;
+  -app-accent-primary: #22c55e;
+  -app-accent-hover: #1ba850;
+
+  -badge-high-bg: #fde0e3;
+  -badge-high-text: #c4435c;
+  -badge-medium-bg: #fef3c7;
+  -badge-medium-text: #a8741e;
+  -badge-low-bg: #d9f2ea;
+  -badge-low-text: #138572;
+  -badge-pending-bg: #ece8e1;
+  -badge-pending-text: #76726a;
+  -badge-progress-bg: #dbe8fb;
+  -badge-progress-text: #3e6bcb;
+  -badge-done-bg: #d8f3e0;
+  -badge-done-text: #1c7a40;
+
+  -row-flag-high: rgba(196, 67, 92, 0.05);
+  -row-flag-done: rgba(28, 122, 64, 0.05);
+}
