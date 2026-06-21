@@ -35,6 +35,8 @@
 .calendar-cell:hover {
   -fx-background-color: -app-elevated;
   -fx-border-color: -app-accent-primary;
+  -fx-translate-y: -2;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 6, 0, 0, 3);
 }
 
 .calendar-day-number {
@@ -46,7 +48,8 @@
 
 .calendar-deadline-marker {
   -fx-text-fill: -app-accent-primary;
-  -fx-font-size: 8px;
+  -fx-font-size: 9px;
+  -fx-font-weight: bold;
 }
 
 .calendar-cell.deadline-cell {
@@ -59,12 +62,29 @@
 
 .calendar-cell.selected-date-cell {
   -fx-border-color: -app-accent-primary;
-  -fx-border-width: 2;
+  -fx-border-width: 3;
+  -fx-background-color: linear-gradient(to bottom right, #f0fbff, #eaf6ff);
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 8, 0, 0, 3);
+}
+
+.theme-dark .calendar-cell.selected-date-cell {
+  -fx-background-color: linear-gradient(to bottom right, rgba(45,212,191,0.18), rgba(15,23,42,0.95));
+  -fx-border-color: #2dd4bf;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);
+}
+
+.theme-dark .calendar-cell.today-cell {
+  -fx-border-color: #2dd4bf;
 }
 
 /* --- Deadline preview list (muncul saat tanggal kalender diklik) --- */
 .deadline-preview-panel {
   -fx-padding: 12;
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
 }
 
 .deadline-preview-title,
@@ -75,9 +95,15 @@
 
 .deadline-preview-title {
   -fx-font-size: 13px;
+  -fx-text-fill: -app-accent-primary;
 }
 
 .deadline-preview-item {
+  -fx-background-color: -app-elevated;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
   -fx-padding: 10;
   -fx-cursor: hand;
 }
@@ -94,4 +120,13 @@
 .deadline-preview-item-meta {
   -fx-text-fill: -app-text-secondary;
   -fx-font-size: 11px;
+}
+
+.calendar-day-task {
+  -fx-font-size: 11px;
+  -fx-text-fill: -app-text-secondary;
+  -fx-max-width: 68px;
+  -fx-wrap-text: true;
+  -fx-alignment: CENTER;
+  -fx-opacity: 0.95;
 }

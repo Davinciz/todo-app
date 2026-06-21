@@ -10,6 +10,14 @@
   -fx-font-weight: bold;
 }
 
+.app-subtitle {
+  -fx-font-size: 12px;
+  -fx-text-fill: -app-text-secondary;
+  -fx-padding: 4 0 16 0;
+  -fx-font-weight: 400;
+  -fx-opacity: 0.9;
+}
+
 /* Util: dipakai untuk tanggal, kode kategori, dan angka tabel */
 .mono-cell {
   -fx-font-family: "Consolas", "Courier New", monospace;

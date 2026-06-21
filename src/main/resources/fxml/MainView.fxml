@@ -26,6 +26,7 @@
     <top>
         <VBox spacing="0" styleClass="header-bar">
             <Label text="✓ Task Tracker" styleClass="app-title"/>
+            <Label text="Kelola tugas dan deadline dengan lebih mudah" styleClass="app-subtitle"/>
             <HBox spacing="12" styleClass="toolbar" alignment="CENTER_LEFT">
                 <TextField fx:id="searchField" promptText="🔍 Cari tugas..." prefWidth="250" HBox.hgrow="SOMETIMES"/>
                 <ChoiceBox fx:id="filterStatusChoiceBox" prefWidth="160"/>
@@ -45,7 +46,7 @@
     <!-- ===================== LEFT: Task Detail & Calendar ===================== -->
     <left>
         <ScrollPane fitToWidth="true" style="-fx-padding: 0; -fx-border-color: transparent;">
-            <VBox spacing="16" styleClass="form-panel detail-panel" maxWidth="380" minWidth="300">
+            <VBox spacing="16" styleClass="form-panel detail-panel" prefWidth="340" maxWidth="380" minWidth="300">
                 <padding>
                     <Insets top="20" right="18" bottom="20" left="18"/>
                 </padding>
@@ -76,14 +77,12 @@
 
                 <VBox fx:id="detailDescriptionBox" spacing="8">
                     <Label text="Deskripsi" styleClass="field-label"/>
-                    <TextArea fx:id="detailDescriptionArea" editable="false" wrapText="true"
-                              prefRowCount="3" maxWidth="Infinity"/>
+                    <TextArea fx:id="detailDescriptionArea" styleClass="detail-description" editable="false" wrapText="true"
+                                  prefRowCount="1" maxWidth="Infinity" prefHeight="48" maxHeight="64"/>
                 </VBox>
 
                 <Button fx:id="editTaskButton" text="Edit Tugas" onAction="#handleShowEditTaskDialog"
-                        maxWidth="Infinity" disable="true"/>
-
-                <Region VBox.vgrow="ALWAYS"/>
+                    maxWidth="200" prefWidth="160" disable="true" styleClass="secondary-button"/>
 
                 <VBox spacing="10" styleClass="calendar-panel">
                     <HBox spacing="8" alignment="CENTER">
@@ -102,30 +101,81 @@
         </ScrollPane>
     </left>
 
-    <!-- ===================== CENTER: Table List Task (Responsive) ===================== -->
+    <!-- ===================== CENTER: Dashboard + Table List Task ===================== -->
     <center>
-        <VBox spacing="14" VBox.vgrow="ALWAYS">
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="14" VBox.vgrow="ALWAYS">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
 
-            <TableView fx:id="taskTableView" VBox.vgrow="ALWAYS" prefHeight="400">
-                <columns>
-                    <TableColumn fx:id="titleColumn" text="Judul Tugas" prefWidth="180" minWidth="120"/>
-                    <TableColumn fx:id="categoryColumn" text="Kategori" prefWidth="110" minWidth="80"/>
-                    <TableColumn fx:id="deadlineColumn" text="Tenggat Waktu" prefWidth="130" minWidth="100"/>
-                    <TableColumn fx:id="priorityColumn" text="Prioritas" prefWidth="100" minWidth="80"/>
-                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="110" minWidth="80"/>
-                    <TableColumn fx:id="attachmentColumn" text="Lampiran" prefWidth="120" minWidth="90"/>
-                </columns>
-            </TableView>
+                <!-- Dashboard: stat cards ringkasan tugas -->
+                <HBox spacing="12" styleClass="stats-row">
+                    <VBox styleClass="stat-card stat-card-total" spacing="4" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="TOTAL TUGAS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label text="🗂" styleClass="stat-icon"/>
+                        </HBox>
+                        <Label fx:id="statTotalLabel" text="0" styleClass="stat-value"/>
+                        <Label text="Semua tugas" styleClass="stat-subtitle"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-card-done" spacing="4" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="SELESAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label text="✓" styleClass="stat-icon"/>
+                        </HBox>
+                        <Label fx:id="statDoneLabel" text="0" styleClass="stat-value"/>
+                        <Label text="Tugas selesai" styleClass="stat-subtitle"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-card-progress" spacing="4" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="IN PROGRESS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label text="⏱" styleClass="stat-icon"/>
+                        </HBox>
+                        <Label fx:id="statProgressLabel" text="0" styleClass="stat-value"/>
+                        <Label text="Sedang berjalan" styleClass="stat-subtitle"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-card-pending" spacing="4" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="BELUM MULAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label text="⚠" styleClass="stat-icon"/>
+                        </HBox>
+                        <Label fx:id="statPendingLabel" text="0" styleClass="stat-value"/>
+                        <Label text="Perlu diperhatikan" styleClass="stat-subtitle"/>
+                    </VBox>
+                    <VBox styleClass="stat-card stat-card-rate" spacing="4" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="COMPLETION RATE" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                            <Label text="◔" styleClass="stat-icon"/>
+                        </HBox>
+                        <Label fx:id="statCompletionRateLabel" text="0%" styleClass="stat-value"/>
+                        <Label text="Dari total tugas" styleClass="stat-subtitle"/>
+                    </VBox>
+                </HBox>
 
-            <HBox spacing="10" alignment="CENTER_RIGHT">
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button fx:id="openAttachmentButton" text="📂 Buka Lampiran" onAction="#handleOpenAttachment"/>
-                <Button fx:id="deleteButton" text="🗑 Hapus Tugas" onAction="#handleDeleteTask" styleClass="danger-button"/>
-            </HBox>
-        </VBox>
+                <!-- Dashboard: upcoming deadlines (14 hari ke depan) -->
+                <VBox spacing="10" styleClass="dashboard-card">
+                    <Label text="Upcoming Deadlines (14 hari)" styleClass="dashboard-card-title"/>
+                    <VBox fx:id="upcomingDeadlinesBox" spacing="8"/>
+                </VBox>
+
+                <TableView fx:id="taskTableView" VBox.vgrow="ALWAYS" prefHeight="400">
+                    <columns>
+                        <TableColumn fx:id="titleColumn" text="Judul Tugas" prefWidth="220" minWidth="140"/>
+                        <TableColumn fx:id="categoryColumn" text="Kategori" prefWidth="110" minWidth="80" maxWidth="160"/>
+                        <TableColumn fx:id="deadlineColumn" text="Tenggat Waktu" prefWidth="130" minWidth="100" maxWidth="150"/>
+                        <TableColumn fx:id="priorityColumn" text="Prioritas" prefWidth="100" minWidth="80" maxWidth="130"/>
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="110" minWidth="80" maxWidth="140"/>
+                        <TableColumn fx:id="attachmentColumn" text="Lampiran" prefWidth="120" minWidth="90" maxWidth="180"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="deleteButton" text="🗑 Hapus Tugas" onAction="#handleDeleteTask" styleClass="danger-button"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
     </center>
 
     <!-- ===================== BOTTOM: Status Bar ===================== -->

@@ -24,16 +24,21 @@
 }
 
 .status-pending {
-  -fx-background-color: -badge-pending-bg;
-  -fx-text-fill: -badge-pending-text;
+  -fx-background-color: linear-gradient(to bottom right, #f0f0f0, #e6e6e6);
+  -fx-text-fill: #555555;
 }
 
 .status-progress {
-  -fx-background-color: -badge-progress-bg;
-  -fx-text-fill: -badge-progress-text;
+  -fx-background-color: linear-gradient(to bottom right, #e6f0ff, #d7e9ff);
+  -fx-text-fill: #1f6feb;
 }
 
 .status-done {
-  -fx-background-color: -badge-done-bg;
-  -fx-text-fill: -badge-done-text;
+  -fx-background-color: linear-gradient(to bottom right, #e9fbec, #dff6df);
+  -fx-text-fill: #15803d;
+}
+
+.status-overdue {
+  -fx-background-color: linear-gradient(to bottom right, #ffecec, #fff0f0);
+  -fx-text-fill: #c92a2a;
 }

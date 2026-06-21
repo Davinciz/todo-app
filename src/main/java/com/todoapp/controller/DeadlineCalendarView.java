@@ -130,10 +130,20 @@ public class DeadlineCalendarView {
         Label dayNumber = new Label(String.valueOf(date.getDayOfMonth()));
         dayNumber.getStyleClass().add("calendar-day-number");
 
-        Label marker = new Label(deadlineCount > 0 ? "●" : "");
-        marker.getStyleClass().add("calendar-deadline-marker");
+        // If there are tasks on this date, show the first task title under the day number
+        String dayTaskText = "";
+        List<Task> tasksOnDate = taskSupplier.get().stream()
+            .filter(t -> date.equals(t.getDeadline()))
+            .collect(Collectors.toList());
+        if (!tasksOnDate.isEmpty()) {
+            Task first = tasksOnDate.get(0);
+            dayTaskText = first.getTitle();
+        }
 
-        VBox cell = new VBox(1, dayNumber, marker);
+        Label dayTaskLabel = new Label(dayTaskText);
+        dayTaskLabel.getStyleClass().add("calendar-day-task");
+
+        VBox cell = new VBox(2, dayNumber, dayTaskLabel);
         cell.setAlignment(Pos.CENTER);
         cell.getStyleClass().add("calendar-cell");
         if (date.equals(LocalDate.now())) {
@@ -144,7 +154,9 @@ public class DeadlineCalendarView {
         }
         if (deadlineCount > 0) {
             cell.getStyleClass().add("deadline-cell");
-            Tooltip.install(cell, new Tooltip(deadlineCount + " deadline pada " + date.format(DATE_FORMAT)));
+            // show tooltip with titles of tasks on this date
+            String tooltipText = tasksOnDate.stream().map(Task::getTitle).collect(Collectors.joining("\n"));
+            Tooltip.install(cell, new Tooltip(tooltipText));
         }
 
         cell.setOnMouseClicked(event -> showTasksForDate(date));
@@ -179,19 +191,19 @@ public class DeadlineCalendarView {
     }
 
     private void showPreview(LocalDate date, List<Task> tasksOnDate) {
-        if (deadlinePreviewBox == null || deadlinePreviewTitleLabel == null || deadlinePreviewList == null) {
-            return;
+        // We still populate the preview list for potential future uses,
+        // but hide the standalone preview panel per UI preference.
+        if (deadlinePreviewList != null) {
+            deadlinePreviewTitleLabel.setText("Deadline " + date.format(DATE_FORMAT) + " (" + tasksOnDate.size() + ")");
+            deadlinePreviewList.getChildren().clear();
+            for (Task task : tasksOnDate) {
+                deadlinePreviewList.getChildren().add(createPreviewItem(task));
+            }
         }
-
-        deadlinePreviewTitleLabel.setText("Deadline " + date.format(DATE_FORMAT) + " (" + tasksOnDate.size() + ")");
-        deadlinePreviewList.getChildren().clear();
-
-        for (Task task : tasksOnDate) {
-            deadlinePreviewList.getChildren().add(createPreviewItem(task));
+        if (deadlinePreviewBox != null) {
+            deadlinePreviewBox.setVisible(false);
+            deadlinePreviewBox.setManaged(false);
         }
-
-        deadlinePreviewBox.setVisible(true);
-        deadlinePreviewBox.setManaged(true);
     }
 
     private VBox createPreviewItem(Task task) {

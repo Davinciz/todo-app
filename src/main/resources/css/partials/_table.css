@@ -15,8 +15,9 @@
 
 .table-view .column-header-background .label {
   -fx-text-fill: -app-text-primary;
-  -fx-font-weight: bold;
-  -fx-font-size: 12px;
+  -fx-font-weight: 800;
+  -fx-font-size: 13px;
+  -fx-letter-spacing: 0.4px;
 }
 
 .table-view .column-header {
@@ -27,11 +28,11 @@
 
 .table-row-cell {
   -fx-background-color: -app-surface;
-  -fx-padding: 8 0 8 0;
+  -fx-padding: 10 12 10 12;
   -fx-text-fill: -app-text-primary;
-  -fx-font-size: 11px;
-  -fx-font-weight: bold;
-  -fx-border-color: -app-border;
+  -fx-font-size: 12px;
+  -fx-font-weight: 600;
+  -fx-border-color: transparent;
   -fx-border-width: 0 0 1 0;
 }
 
@@ -48,13 +49,14 @@
 
 .table-row-cell:hover {
   -fx-background-color: -app-elevated;
+  -fx-translate-y: -1;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 6, 0, 0, 2);
 }
 
 .table-row-cell:selected {
   -fx-background-color: -app-elevated;
   -fx-border-color: -app-accent-primary;
-  -fx-border-width: 0 0 0 3;
-  -fx-font-weight: bold;
+  -fx-border-width: 0 0 0 4;
 }
 
 .table-row-cell:empty,

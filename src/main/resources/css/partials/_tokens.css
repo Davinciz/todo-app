@@ -7,30 +7,32 @@
 
 .root,
 .theme-dark {
-  -app-background: #1a1a1c;
-  -app-surface: #212124;
-  -app-elevated: #2a2a2e;
-  -app-border: #34343a;
-  -app-text-primary: #f0f0f2;
-  -app-text-secondary: #9b9ba2;
-  -app-accent-primary: #34d976;
-  -app-accent-hover: #4ee88c;
+  -app-background: #141516;
+  -app-surface: #1f1f23;
+  -app-elevated: #2a2a30;
+  -app-border: #3a3a42;
+  -app-text-primary: #f5f5f7;
+  -app-text-secondary: #a8a8b2;
+  -app-accent-primary: #2dd4bf;
+  -app-accent-hover: #3ddcc9;
 
-  -badge-high-bg: #3a2228;
-  -badge-high-text: #f5a7b6;
-  -badge-medium-bg: #3a3120;
-  -badge-medium-text: #f0c878;
-  -badge-low-bg: #1c352a;
-  -badge-low-text: #7fe3b0;
-  -badge-pending-bg: #2c2c31;
-  -badge-pending-text: #a8a8b0;
-  -badge-progress-bg: #1f2c42;
-  -badge-progress-text: #93b8f5;
-  -badge-done-bg: #1a3324;
-  -badge-done-text: #6fe096;
+  -badge-high-bg: #3a2530;
+  -badge-high-text: #ff9fbf;
+  -badge-medium-bg: #3d3420;
+  -badge-medium-text: #ffc966;
+  -badge-low-bg: #1f3a30;
+  -badge-low-text: #8ff0c0;
+  -badge-pending-bg: #303035;
+  -badge-pending-text: #b8b8c0;
+  -badge-progress-bg: #1f3050;
+  -badge-progress-text: #a0c8ff;
+  -badge-done-bg: #1a3d28;
+  -badge-done-text: #7eff9f;
 
-  -row-flag-high: rgba(245, 167, 182, 0.07);
-  -row-flag-done: rgba(111, 224, 150, 0.07);
+  -row-flag-high: rgba(255, 159, 191, 0.08);
+  -row-flag-done: rgba(126, 255, 159, 0.08);
+
+  -app-accent-soft: rgba(45, 212, 191, 0.16);
 }
 
 .theme-light {
@@ -58,4 +60,6 @@
 
   -row-flag-high: rgba(196, 67, 92, 0.05);
   -row-flag-done: rgba(28, 122, 64, 0.05);
+
+  -app-accent-soft: rgba(34, 197, 94, 0.12);
 }

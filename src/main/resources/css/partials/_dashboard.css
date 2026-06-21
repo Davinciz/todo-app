@@ -1,0 +1,200 @@
+/* ===================== Dashboard: Stat Cards & Upcoming Deadlines =====================
+   Memakai variabel -app-* / -badge-* dari _tokens.css supaya otomatis
+   mengikuti tema aktif (dark/light), konsisten dengan partial lain. */
+
+.stats-row {
+  -fx-padding: 0 0 4 0;
+}
+
+.stat-card {
+  -fx-background-color: transparent;
+  -fx-background-radius: 12;
+  -fx-padding: 14 16 14 16;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+  -fx-cursor: default;
+}
+
+.stat-card-total {
+  -fx-background-color: linear-gradient(to bottom right, #335544, #2a4835); /* bright green dark */
+  -fx-border-radius: 12;
+}
+
+.stat-card-done {
+  -fx-background-color: linear-gradient(to bottom right, #1f4470, #1a3a5c); /* bright blue dark */
+  -fx-border-radius: 12;
+}
+
+.stat-card-progress {
+  -fx-background-color: linear-gradient(to bottom right, #5a4a35, #4a3a28); /* bright orange dark */
+  -fx-border-radius: 12;
+}
+
+.stat-card-pending {
+  -fx-background-color: linear-gradient(to bottom right, #403d55, #342d48); /* bright purple dark */
+  -fx-border-radius: 12;
+}
+
+.stat-card-rate {
+  -fx-background-color: linear-gradient(to bottom right, #584040, #472f38); /* bright red dark */
+  -fx-border-radius: 12;
+}
+
+.stat-label {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-letter-spacing: 0.5px;
+}
+
+.stat-icon {
+  -fx-font-size: 16px;
+  -fx-text-fill: -app-text-secondary;
+}
+
+.stat-card-total .stat-icon {
+  -fx-text-fill: -app-accent-primary;
+}
+
+.stat-card-done .stat-icon {
+  -fx-text-fill: -badge-done-text;
+}
+
+.stat-card-progress .stat-icon {
+  -fx-text-fill: -badge-progress-text;
+}
+
+.stat-card-pending .stat-icon {
+  -fx-text-fill: -badge-high-text;
+}
+
+.stat-card-rate .stat-icon {
+  -fx-text-fill: -badge-medium-text;
+}
+
+.stat-value {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 28px;
+  -fx-font-weight: 800;
+}
+
+.stat-card-total .stat-value {
+  -fx-text-fill: -app-accent-primary;
+}
+
+.stat-card-done .stat-value {
+  -fx-text-fill: -badge-done-text;
+}
+
+.stat-card-progress .stat-value {
+  -fx-text-fill: -badge-progress-text;
+}
+
+.stat-card-pending .stat-value {
+  -fx-text-fill: -badge-high-text;
+}
+
+.stat-card-rate .stat-value {
+  -fx-text-fill: -badge-medium-text;
+}
+
+.stat-subtitle {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 10px;
+  -fx-font-weight: normal;
+}
+
+.dashboard-card {
+  -fx-background-color: -app-surface;
+  -fx-background-radius: 8;
+  -fx-border-color: -app-border;
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+  -fx-padding: 14;
+}
+
+.dashboard-card-title {
+  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-text-fill: -app-accent-primary;
+}
+
+.upcoming-row {
+  -fx-background-color: -app-elevated;
+  -fx-background-radius: 8;
+  -fx-border-color: transparent;
+  -fx-border-width: 1;
+  -fx-padding: 12 14 12 14;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 3);
+  -fx-alignment: CENTER_LEFT;
+  -fx-spacing: 10;
+}
+
+.theme-dark .upcoming-row {
+  -fx-background-color: #333340;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);
+}
+
+.upcoming-row:hover {
+  -fx-background-color: -app-surface;
+  -fx-border-color: transparent;
+  -fx-translate-y: -2;
+}
+
+.theme-dark .upcoming-row:hover {
+  -fx-background-color: #3d3d4a;
+  -fx-border-color: -app-accent-primary;
+}
+
+.upcoming-overdue {
+  -fx-background-color: -row-flag-high;
+  -fx-border-color: -badge-high-text;
+}
+
+.upcoming-priority-high {
+  -fx-border-color: transparent;
+  -fx-border-width: 0 0 0 6;
+  -fx-border-style: solid;
+  -fx-border-color: #f59e0b; /* orange light mode */
+}
+
+.theme-dark .upcoming-priority-high {
+  -fx-border-color: #2dd4bf; /* neon teal dark mode */
+}
+
+.upcoming-priority-medium {
+  -fx-border-width: 0 0 0 6;
+  -fx-border-style: solid;
+  -fx-border-color: #f59e0b; /* orange light mode */
+}
+
+.theme-dark .upcoming-priority-medium {
+  -fx-border-color: #2dd4bf; /* neon teal dark mode */
+}
+
+.upcoming-priority-low {
+  -fx-border-width: 0 0 0 6;
+  -fx-border-style: solid;
+  -fx-border-color: #f59e0b; /* orange light mode */
+}
+
+.theme-dark .upcoming-priority-low {
+  -fx-border-color: #2dd4bf; /* neon teal dark mode */
+}
+
+.upcoming-soon {
+  -fx-background-color: linear-gradient(to right, rgba(255,244,229,0.9), -app-elevated);
+  -fx-effect: dropshadow(three-pass-box, rgba(250, 150, 50, 0.06), 8, 0, 0, 4);
+}
+
+.upcoming-title {
+  -fx-text-fill: -app-text-primary;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+}
+
+.upcoming-meta {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 11px;
+}

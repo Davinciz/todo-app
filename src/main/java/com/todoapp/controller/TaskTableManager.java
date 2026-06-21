@@ -126,6 +126,11 @@ public class TaskTableManager {
         return taskList;
     }
 
+    /** Mengosongkan seleksi tabel sehingga panel detail dapat dikembalikan ke default. */
+    public void clearSelection() {
+        taskTableView.getSelectionModel().clearSelection();
+    }
+
     /** Menerapkan style badge (warna) sesuai grup ("priority"/"status") dan nilainya. */
     public static void applyBadgeStyle(Label label, String group, String value) {
         label.getStyleClass().removeAll(

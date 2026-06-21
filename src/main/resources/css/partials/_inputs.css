@@ -11,7 +11,7 @@
   -fx-text-fill: -app-accent-primary;
   -fx-font-size: 26px;
   -fx-font-weight: bold;
-  -fx-padding: 14 15 10 15;
+  -fx-padding: 14 15 4 15;
 }
 
 .toolbar {

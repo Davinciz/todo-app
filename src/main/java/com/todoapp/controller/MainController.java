@@ -10,9 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.prefs.Preferences;
+import javafx.collections.ListChangeListener;
 
 /**
  * Orchestrator utama UI. Tugasnya hanya menghubungkan komponen-komponen
@@ -31,7 +31,6 @@ public class MainController {
 
     @FXML private BorderPane rootPane;
 
-    @FXML private Button openAttachmentButton;
     @FXML private Button deleteButton;
     @FXML private Button refreshButton;
     @FXML private Button newTaskButton;
@@ -68,6 +67,13 @@ public class MainController {
     @FXML private TableColumn<Task, String> statusColumn;
     @FXML private TableColumn<Task, String> attachmentColumn;
 
+    @FXML private Label statTotalLabel;
+    @FXML private Label statDoneLabel;
+    @FXML private Label statProgressLabel;
+    @FXML private Label statPendingLabel;
+    @FXML private Label statCompletionRateLabel;
+    @FXML private VBox upcomingDeadlinesBox;
+
     @FXML private Label statusBarLabel;
 
     private final TaskDAO taskDAO = new TaskDAO();
@@ -79,6 +85,7 @@ public class MainController {
     private DeadlineCalendarView calendarView;
     private NotificationToastManager notificationManager;
     private TaskFormDialog formDialog;
+    private DashboardStatsPanel dashboardStatsPanel;
 
     @FXML
     public void initialize() {
@@ -87,9 +94,11 @@ public class MainController {
         themeManager = new ThemeManager(rootPane, themeToggleButton, preferences);
 
         tableManager = new TaskTableManager(
-                taskTableView, titleColumn, categoryColumn, deadlineColumn,
-                priorityColumn, statusColumn, attachmentColumn
+            taskTableView, titleColumn, categoryColumn, deadlineColumn,
+            priorityColumn, statusColumn, attachmentColumn
         );
+        // Make columns fill the available width (avoid empty filler column)
+        taskTableView.setColumnResizePolicy(javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY);
         tableManager.setOnSelectionChanged(this::onTaskSelected);
 
         detailPanel = new TaskDetailPanel(
@@ -104,6 +113,11 @@ public class MainController {
                 deadlinePreviewBox, deadlinePreviewTitleLabel, deadlinePreviewList
         );
         calendarView.setTaskSupplier(() -> tableManager.getTaskList());
+        // Re-render calendar whenever the task list changes (add/update/delete)
+        tableManager.getTaskList().addListener((ListChangeListener<Task>) change -> {
+            calendarView.clearPreview();
+            calendarView.render();
+        });
         calendarView.setOnTaskSelected(this::selectTask);
         calendarView.setStatusReporter(this::setStatus);
 
@@ -113,6 +127,12 @@ public class MainController {
         );
 
         formDialog = new TaskFormDialog(taskDAO, stylesheetUrl);
+
+        dashboardStatsPanel = new DashboardStatsPanel(
+                statTotalLabel, statDoneLabel, statProgressLabel,
+                statPendingLabel, statCompletionRateLabel, upcomingDeadlinesBox
+        );
+        dashboardStatsPanel.setOnTaskSelected(this::selectTask);
 
         setupFilterChoiceBox();
         setupSearchListener();
@@ -147,6 +167,7 @@ public class MainController {
             tableManager.setTasks(tasks);
             calendarView.clearPreview();
             calendarView.render();
+            dashboardStatsPanel.render(tasks);
             notificationManager.showDeadlineNotifications(tasks);
             setStatus("Berhasil memuat " + tasks.size() + " tugas.");
         } catch (Exception e) {
@@ -199,8 +220,6 @@ public class MainController {
 
     private void onTaskSaved(Task savedTask, String statusMessage) {
         loadAllTasks();
-        Task reselected = tableManager.selectTaskById(savedTask.getId());
-        detailPanel.update(reselected);
         setStatus(statusMessage);
     }
 
@@ -239,26 +258,13 @@ public class MainController {
         searchField.clear();
         filterStatusChoiceBox.setValue("Semua");
         loadAllTasks();
+        tableManager.clearSelection();
+        detailPanel.update(null);
     }
 
     @FXML
     private void handleToggleTheme() {
         themeManager.toggleTheme();
-    }
-
-    @FXML
-    private void handleOpenAttachment() {
-        Task task = tableManager.getSelectedTask();
-        if (task == null || !task.hasAttachment()) {
-            showError("Tidak ada lampiran", "Tugas ini tidak memiliki file lampiran.");
-            return;
-        }
-
-        try {
-            FileAttachmentManager.openAttachment(task.getAttachmentPath());
-        } catch (IOException e) {
-            showError("Gagal membuka lampiran", e.getMessage());
-        }
     }
 
     @FXML

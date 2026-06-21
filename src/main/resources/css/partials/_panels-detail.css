@@ -7,10 +7,10 @@
 
 .section-title {
   -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  -fx-font-size: 20px;
-  -fx-font-weight: bold;
+  -fx-font-size: 18px;
+  -fx-font-weight: 800;
   -fx-text-fill: -app-accent-primary;
-  -fx-padding: 0 0 8 0;
+  -fx-padding: 0 0 6 0;
 }
 
 .field-label,
@@ -41,47 +41,58 @@
 .deadline-preview-panel,
 .deadline-preview-item {
   -fx-background-color: -app-surface;
-  -fx-background-radius: 8;
-  -fx-border-color: -app-border;
-  -fx-border-radius: 8;
-  -fx-border-width: 1;
+  -fx-background-radius: 10;
+}
+
+.calendar-panel {
+  -fx-pref-height: 340;
+  -fx-padding: 12;
 }
 
 .detail-card {
-  -fx-padding: 14;
+  -fx-padding: 12;
+  -fx-max-width: 320;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 8, 0, 0, 3);
 }
 
 .detail-title {
-  -fx-font-size: 20px;
-  -fx-font-weight: bold;
+  -fx-font-size: 16px;
+  -fx-font-weight: 800;
   -fx-text-fill: -app-accent-primary;
 }
 
 .detail-meta {
-  -fx-font-size: 12px;
-  -fx-line-spacing: 2;
+  -fx-font-size: 11px;
+  -fx-line-spacing: 1.6;
 }
 
 .detail-facts-grid {
-  -fx-padding: 12;
+  -fx-padding: 8;
 }
 
 .detail-fact-name {
-  -fx-font-size: 11px;
-  -fx-font-weight: bold;
-  -fx-min-width: 72;
+  -fx-font-size: 10px;
+  -fx-font-weight: 700;
+  -fx-min-width: 64;
 }
 
 .detail-fact-value {
   -fx-text-fill: -app-text-primary;
   -fx-font-size: 12px;
-  -fx-font-weight: bold;
+  -fx-font-weight: 700;
 }
 
 .detail-panel .text-area {
-  -fx-min-height: 88;
-  -fx-pref-height: 96;
-  -fx-max-height: 112;
+  -fx-min-height: 56;
+  -fx-pref-height: 72;
+  -fx-max-height: 88;
+}
+
+.secondary-button {
+  -fx-background-color: transparent;
+  -fx-border-color: -app-border;
+  -fx-text-fill: -app-text-primary;
+  -fx-padding: 8 12 8 12;
 }
 
 .detail-overdue {
@@ -92,4 +103,14 @@
 .detail-done {
   -fx-background-color: -row-flag-done;
   -fx-border-color: -badge-done-text;
+}
+
+.detail-description {
+-fx-min-height: 44;
+-fx-pref-height: 56;
+-fx-max-height: 120;
+-fx-font-size: 12px;
+-fx-text-fill: -app-text-primary;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
 }
