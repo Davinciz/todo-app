@@ -2,6 +2,7 @@ package com.todoapp.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.nio.file.Files;
@@ -60,6 +61,7 @@ public class DatabaseConnection {
                 priority TEXT NOT NULL DEFAULT 'MEDIUM',
                 status TEXT NOT NULL DEFAULT 'PENDING',
                 category TEXT,
+                mata_kuliah TEXT,
                 attachment_path TEXT,
                 attachment_name TEXT,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
@@ -68,6 +70,33 @@ public class DatabaseConnection {
 
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(createTaskTable);
+        }
+
+        // Migration: tambah kolom mata_kuliah jika belum ada (untuk database lama)
+        migrateAddMataKuliah(conn);
+    }
+
+    /**
+     * Menambahkan kolom mata_kuliah ke tabel tasks jika belum ada.
+     * Aman dijalankan berulang kali — tidak akan error jika kolom sudah ada.
+     */
+    private static void migrateAddMataKuliah(Connection conn) throws SQLException {
+        // Cek apakah kolom sudah ada via PRAGMA
+        boolean columnExists = false;
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("PRAGMA table_info(tasks)")) {
+            while (rs.next()) {
+                if ("mata_kuliah".equalsIgnoreCase(rs.getString("name"))) {
+                    columnExists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!columnExists) {
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("ALTER TABLE tasks ADD COLUMN mata_kuliah TEXT");
+            }
         }
     }
 

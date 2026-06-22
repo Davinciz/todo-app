@@ -2,61 +2,75 @@
 .table-view {
   -fx-background-color: -app-surface;
   -fx-control-inner-background: -app-surface;
-  -fx-table-cell-border-color: -app-border;
+  -fx-table-cell-border-color: transparent;
   -fx-border-color: -app-border;
   -fx-border-radius: 10;
   -fx-border-width: 1;
+  -fx-padding: 0;
+  -fx-background-radius: 10;
 }
 
 .table-view .column-header-background,
 .table-view .filler {
   -fx-background-color: -app-elevated;
+  -fx-background-radius: 10 10 0 0;
 }
 
 .table-view .column-header-background .label {
-  -fx-text-fill: -app-text-primary;
+  -fx-text-fill: -app-accent-primary;
   -fx-font-weight: 800;
-  -fx-font-size: 13px;
-  -fx-letter-spacing: 0.4px;
+  -fx-font-size: 12px;
+  -fx-letter-spacing: 0.6px;
 }
 
 .table-view .column-header {
-  -fx-padding: 12 10 12 10;
+  -fx-padding: 14 10 14 10;
   -fx-background-color: -app-elevated;
-  -fx-border-color: -app-border;
+  -fx-border-color: transparent;
+  -fx-border-width: 0;
+  -fx-border-style: none;
+}
+
+.table-view .column-header:first-visible {
+  -fx-background-radius: 10 0 0 0;
+}
+
+.table-view .column-header:last-visible {
+  -fx-background-radius: 0 10 0 0;
 }
 
 .table-row-cell {
   -fx-background-color: -app-surface;
-  -fx-padding: 10 12 10 12;
+  -fx-padding: 8 12 8 12;
   -fx-text-fill: -app-text-primary;
   -fx-font-size: 12px;
   -fx-font-weight: 600;
-  -fx-border-color: transparent;
+  -fx-border-color: -app-border;
   -fx-border-width: 0 0 1 0;
 }
 
 .table-row-cell:odd {
-  -fx-background-color: -app-surface;
+  -fx-background-color: -app-elevated;
 }
 
 .table-cell {
   -fx-text-fill: -app-text-primary;
-  -fx-font-weight: bold;
-  -fx-border-color: -app-border;
-  -fx-border-width: 0 1 0 0;
+  -fx-font-weight: 600;
+  -fx-border-color: transparent;
+  -fx-border-width: 0;
+  -fx-padding: 6 8 6 8;
 }
 
 .table-row-cell:hover {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: -app-accent-soft;
   -fx-translate-y: -1;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 6, 0, 0, 2);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.04), 6, 0, 0, 2);
 }
 
 .table-row-cell:selected {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: -app-accent-soft;
   -fx-border-color: -app-accent-primary;
-  -fx-border-width: 0 0 0 4;
+  -fx-border-width: 0 0 1 4;
 }
 
 .table-row-cell:empty,
@@ -68,16 +82,57 @@
 .table-row-cell.overdue-row {
   -fx-background-color: -row-flag-high;
   -fx-border-color: -badge-high-text;
-  -fx-border-width: 0 0 0 3;
+  -fx-border-width: 0 0 1 4;
 }
 
 .table-row-cell.done-row {
   -fx-background-color: -row-flag-done;
   -fx-border-color: -badge-done-text;
-  -fx-border-width: 0 0 0 3;
+  -fx-border-width: 0 0 1 4;
 }
 
 .table-row-cell.overdue-row:selected,
 .table-row-cell.done-row:selected {
+  -fx-background-color: -app-accent-soft;
   -fx-border-color: -app-accent-primary;
+  -fx-border-width: 0 0 1 4;
+}
+
+/* Badge styles inside table cells */
+.table-cell .badge {
+  -fx-padding: 2 8 2 8;
+  -fx-background-radius: 4;
+  -fx-background-color: transparent;
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+}
+
+.table-cell .badge.priority-high {
+  -fx-background-color: -badge-high-bg;
+  -fx-text-fill: -badge-high-text;
+}
+
+.table-cell .badge.priority-medium {
+  -fx-background-color: -badge-medium-bg;
+  -fx-text-fill: -badge-medium-text;
+}
+
+.table-cell .badge.priority-low {
+  -fx-background-color: -badge-low-bg;
+  -fx-text-fill: -badge-low-text;
+}
+
+.table-cell .badge.status-pending {
+  -fx-background-color: -badge-pending-bg;
+  -fx-text-fill: -badge-pending-text;
+}
+
+.table-cell .badge.status-progress {
+  -fx-background-color: -badge-progress-bg;
+  -fx-text-fill: -badge-progress-text;
+}
+
+.table-cell .badge.status-done {
+  -fx-background-color: -badge-done-bg;
+  -fx-text-fill: -badge-done-text;
 }

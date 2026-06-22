@@ -24,6 +24,7 @@ public class TaskDetailPanel {
     private final Label detailTitleLabel;
     private final Label detailMetaLabel;
     private final Label detailCategoryLabel;
+    private final Label detailCourseLabel;
     private final Label detailDeadlineLabel;
     private final Label detailPriorityLabel;
     private final Label detailStatusLabel;
@@ -38,6 +39,7 @@ public class TaskDetailPanel {
                             Label detailTitleLabel,
                             Label detailMetaLabel,
                             Label detailCategoryLabel,
+                            Label detailCourseLabel,
                             Label detailDeadlineLabel,
                             Label detailPriorityLabel,
                             Label detailStatusLabel,
@@ -51,6 +53,7 @@ public class TaskDetailPanel {
         this.detailTitleLabel = detailTitleLabel;
         this.detailMetaLabel = detailMetaLabel;
         this.detailCategoryLabel = detailCategoryLabel;
+        this.detailCourseLabel = detailCourseLabel;
         this.detailDeadlineLabel = detailDeadlineLabel;
         this.detailPriorityLabel = detailPriorityLabel;
         this.detailStatusLabel = detailStatusLabel;
@@ -70,6 +73,7 @@ public class TaskDetailPanel {
             detailTitleLabel.setText("Pilih tugas dari tabel");
             detailMetaLabel.setText("Detail tugas akan muncul di sini.");
             detailCategoryLabel.setText("-");
+            detailCourseLabel.setText("-");
             detailDeadlineLabel.setText("-");
             detailPriorityLabel.setText("-");
             detailStatusLabel.setText("-");
@@ -80,6 +84,7 @@ public class TaskDetailPanel {
 
         String deadline = task.getDeadline() != null ? task.getDeadline().format(DATE_FORMAT) : "-";
         String category = isBlank(task.getCategory()) ? "-" : task.getCategory();
+        String mataKuliah = isBlank(task.getMataKuliah()) ? "-" : task.getMataKuliah();
         String attachment = task.hasAttachment() ? task.getAttachmentName() : "-";
 
         detailCard.getStyleClass().removeAll("detail-overdue", "detail-done");
@@ -92,6 +97,7 @@ public class TaskDetailPanel {
         detailTitleLabel.setText(task.getTitle());
         detailMetaLabel.setText(getStatusSummary(task));
         detailCategoryLabel.setText(category);
+        detailCourseLabel.setText(mataKuliah);
         detailDeadlineLabel.setText(deadline);
         detailPriorityLabel.setText(task.getPriority().name());
         detailStatusLabel.setText(task.getStatus().name());

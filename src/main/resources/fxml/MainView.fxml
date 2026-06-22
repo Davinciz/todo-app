@@ -25,8 +25,7 @@
     <!-- ===================== TOP: Header & Search ===================== -->
     <top>
         <VBox spacing="0" styleClass="header-bar">
-            <Label text="✓ Task Tracker" styleClass="app-title"/>
-            <Label text="Kelola tugas dan deadline dengan lebih mudah" styleClass="app-subtitle"/>
+            <Label text="UniTask" styleClass="app-title"/>
             <HBox spacing="12" styleClass="toolbar" alignment="CENTER_LEFT">
                 <TextField fx:id="searchField" promptText="🔍 Cari tugas..." prefWidth="250" HBox.hgrow="SOMETIMES"/>
                 <ChoiceBox fx:id="filterStatusChoiceBox" prefWidth="160"/>
@@ -62,17 +61,20 @@
                     <Label text="Kategori" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                     <Label fx:id="detailCategoryLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                    <Label text="Deadline" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                    <Label fx:id="detailDeadlineLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Mata Kuliah" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="detailCourseLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                    <Label text="Prioritas" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <Label fx:id="detailPriorityLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <Label text="Deadline" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="detailDeadlineLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                    <Label text="Status" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                    <Label fx:id="detailStatusLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    <Label text="Prioritas" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="detailPriorityLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                    <Label text="Lampiran" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                    <Label fx:id="detailAttachmentLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                    <Label text="Status" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <Label fx:id="detailStatusLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                    <Label text="Lampiran" styleClass="detail-fact-name" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <Label fx:id="detailAttachmentLabel" text="-" styleClass="detail-fact-value" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                 </GridPane>
 
                 <VBox fx:id="detailDescriptionBox" spacing="8">
@@ -112,42 +114,27 @@
                 <!-- Dashboard: stat cards ringkasan tugas -->
                 <HBox spacing="12" styleClass="stats-row">
                     <VBox styleClass="stat-card stat-card-total" spacing="4" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT">
-                            <Label text="TOTAL TUGAS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                            <Label text="🗂" styleClass="stat-icon"/>
-                        </HBox>
+                        <Label text="TOTAL TUGAS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                         <Label fx:id="statTotalLabel" text="0" styleClass="stat-value"/>
                         <Label text="Semua tugas" styleClass="stat-subtitle"/>
                     </VBox>
                     <VBox styleClass="stat-card stat-card-done" spacing="4" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT">
-                            <Label text="SELESAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                            <Label text="✓" styleClass="stat-icon"/>
-                        </HBox>
+                        <Label text="SELESAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                         <Label fx:id="statDoneLabel" text="0" styleClass="stat-value"/>
                         <Label text="Tugas selesai" styleClass="stat-subtitle"/>
                     </VBox>
                     <VBox styleClass="stat-card stat-card-progress" spacing="4" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT">
-                            <Label text="IN PROGRESS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                            <Label text="⏱" styleClass="stat-icon"/>
-                        </HBox>
+                        <Label text="IN PROGRESS" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                         <Label fx:id="statProgressLabel" text="0" styleClass="stat-value"/>
                         <Label text="Sedang berjalan" styleClass="stat-subtitle"/>
                     </VBox>
                     <VBox styleClass="stat-card stat-card-pending" spacing="4" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT">
-                            <Label text="BELUM MULAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                            <Label text="⚠" styleClass="stat-icon"/>
-                        </HBox>
+                        <Label text="BELUM MULAI" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                         <Label fx:id="statPendingLabel" text="0" styleClass="stat-value"/>
                         <Label text="Perlu diperhatikan" styleClass="stat-subtitle"/>
                     </VBox>
                     <VBox styleClass="stat-card stat-card-rate" spacing="4" HBox.hgrow="ALWAYS">
-                        <HBox alignment="CENTER_LEFT">
-                            <Label text="COMPLETION RATE" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                            <Label text="◔" styleClass="stat-icon"/>
-                        </HBox>
+                        <Label text="COMPLETION RATE" styleClass="stat-label" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                         <Label fx:id="statCompletionRateLabel" text="0%" styleClass="stat-value"/>
                         <Label text="Dari total tugas" styleClass="stat-subtitle"/>
                     </VBox>
@@ -161,12 +148,13 @@
 
                 <TableView fx:id="taskTableView" VBox.vgrow="ALWAYS" prefHeight="400">
                     <columns>
-                        <TableColumn fx:id="titleColumn" text="Judul Tugas" prefWidth="220" minWidth="140"/>
-                        <TableColumn fx:id="categoryColumn" text="Kategori" prefWidth="110" minWidth="80" maxWidth="160"/>
-                        <TableColumn fx:id="deadlineColumn" text="Tenggat Waktu" prefWidth="130" minWidth="100" maxWidth="150"/>
-                        <TableColumn fx:id="priorityColumn" text="Prioritas" prefWidth="100" minWidth="80" maxWidth="130"/>
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="110" minWidth="80" maxWidth="140"/>
-                        <TableColumn fx:id="attachmentColumn" text="Lampiran" prefWidth="120" minWidth="90" maxWidth="180"/>
+                        <TableColumn fx:id="titleColumn"      text="Judul Tugas"   prefWidth="200" minWidth="130"/>
+                        <TableColumn fx:id="categoryColumn"   text="Kategori"      prefWidth="110" minWidth="80"  maxWidth="150"/>
+                        <TableColumn fx:id="mataKuliahColumn" text="Mata Kuliah"   prefWidth="140" minWidth="100" maxWidth="200"/>
+                        <TableColumn fx:id="deadlineColumn"   text="Tenggat Waktu" prefWidth="120" minWidth="100" maxWidth="140"/>
+                        <TableColumn fx:id="priorityColumn"   text="Prioritas"     prefWidth="90"  minWidth="80"  maxWidth="120"/>
+                        <TableColumn fx:id="statusColumn"     text="Status"        prefWidth="110" minWidth="80"  maxWidth="140"/>
+                        <TableColumn fx:id="attachmentColumn" text="Lampiran"      prefWidth="110" minWidth="90"  maxWidth="170"/>
                     </columns>
                 </TableView>
 

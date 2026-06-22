@@ -16,12 +16,30 @@
   -fx-background-color: -app-surface;
 }
 
+/* Hide scrollbar visually but keep scrolling functionality */
 .scroll-bar:horizontal,
 .scroll-bar:vertical {
-  -fx-background-color: -app-background;
+  -fx-background-color: transparent;
+  -fx-opacity: 0;
+  -fx-pref-width: 0;
+  -fx-pref-height: 0;
 }
 
 .scroll-bar .thumb {
-  -fx-background-color: -app-border;
-  -fx-background-radius: 8;
+  -fx-background-color: transparent;
+  -fx-background-radius: 0;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+  -fx-pref-width: 0;
+  -fx-pref-height: 0;
+  -fx-opacity: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+  -fx-pref-width: 0;
+  -fx-pref-height: 0;
+  -fx-opacity: 0;
 }

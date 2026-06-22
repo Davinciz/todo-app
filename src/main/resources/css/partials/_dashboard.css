@@ -10,65 +10,110 @@
   -fx-background-color: transparent;
   -fx-background-radius: 12;
   -fx-padding: 14 16 14 16;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 10, 0, 0, 4);
   -fx-cursor: default;
 }
 
 .stat-card-total {
-  -fx-background-color: linear-gradient(to bottom right, #335544, #2a4835); /* bright green dark */
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #335544,
+    #2a4835
+  ); /* bright green dark */
   -fx-border-radius: 12;
 }
 
 .stat-card-done {
-  -fx-background-color: linear-gradient(to bottom right, #1f4470, #1a3a5c); /* bright blue dark */
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #1f4470,
+    #1a3a5c
+  ); /* bright blue dark */
   -fx-border-radius: 12;
 }
 
 .stat-card-progress {
-  -fx-background-color: linear-gradient(to bottom right, #5a4a35, #4a3a28); /* bright orange dark */
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #5a4a35,
+    #4a3a28
+  ); /* bright orange dark */
   -fx-border-radius: 12;
 }
 
 .stat-card-pending {
-  -fx-background-color: linear-gradient(to bottom right, #403d55, #342d48); /* bright purple dark */
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #403d55,
+    #342d48
+  ); /* bright purple dark */
   -fx-border-radius: 12;
 }
 
 .stat-card-rate {
-  -fx-background-color: linear-gradient(to bottom right, #584040, #472f38); /* bright red dark */
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #584040,
+    #472f38
+  ); /* bright red dark */
   -fx-border-radius: 12;
 }
 
 .stat-label {
-  -fx-text-fill: -app-text-secondary;
   -fx-font-size: 11px;
   -fx-font-weight: 700;
   -fx-letter-spacing: 0.5px;
 }
 
-.stat-icon {
-  -fx-font-size: 16px;
-  -fx-text-fill: -app-text-secondary;
-}
-
-.stat-card-total .stat-icon {
+.stat-card-total .stat-label {
   -fx-text-fill: -app-accent-primary;
 }
 
-.stat-card-done .stat-icon {
+.stat-card-done .stat-label {
   -fx-text-fill: -badge-done-text;
 }
 
-.stat-card-progress .stat-icon {
+.stat-card-progress .stat-label {
   -fx-text-fill: -badge-progress-text;
 }
 
-.stat-card-pending .stat-icon {
+.stat-card-pending .stat-label {
   -fx-text-fill: -badge-high-text;
 }
 
-.stat-card-rate .stat-icon {
+.stat-card-rate .stat-label {
   -fx-text-fill: -badge-medium-text;
+}
+
+.stat-subtitle {
+  -fx-text-fill: -app-text-secondary;
+  -fx-font-size: 10px;
+  -fx-font-weight: normal;
+}
+
+.stat-card-total .stat-subtitle {
+  -fx-text-fill: -app-accent-primary;
+  -fx-opacity: 0.7;
+}
+
+.stat-card-done .stat-subtitle {
+  -fx-text-fill: -badge-done-text;
+  -fx-opacity: 0.7;
+}
+
+.stat-card-progress .stat-subtitle {
+  -fx-text-fill: -badge-progress-text;
+  -fx-opacity: 0.7;
+}
+
+.stat-card-pending .stat-subtitle {
+  -fx-text-fill: -badge-high-text;
+  -fx-opacity: 0.7;
+}
+
+.stat-card-rate .stat-subtitle {
+  -fx-text-fill: -badge-medium-text;
+  -fx-opacity: 0.7;
 }
 
 .stat-value {
@@ -97,12 +142,6 @@
   -fx-text-fill: -badge-medium-text;
 }
 
-.stat-subtitle {
-  -fx-text-fill: -app-text-secondary;
-  -fx-font-size: 10px;
-  -fx-font-weight: normal;
-}
-
 .dashboard-card {
   -fx-background-color: -app-surface;
   -fx-background-radius: 8;
@@ -126,24 +165,24 @@
   -fx-border-width: 1;
   -fx-padding: 12 14 12 14;
   -fx-cursor: hand;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 3);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 8, 0, 0, 3);
   -fx-alignment: CENTER_LEFT;
   -fx-spacing: 10;
 }
 
 .theme-dark .upcoming-row {
   -fx-background-color: #333340;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 4);
 }
 
 .upcoming-row:hover {
-  -fx-background-color: -app-surface;
-  -fx-border-color: transparent;
+  -fx-background-color: -app-accent-soft;
+  -fx-border-color: -app-accent-primary;
   -fx-translate-y: -2;
 }
 
 .theme-dark .upcoming-row:hover {
-  -fx-background-color: #3d3d4a;
+  -fx-background-color: -app-accent-soft;
   -fx-border-color: -app-accent-primary;
 }
 
@@ -184,7 +223,11 @@
 }
 
 .upcoming-soon {
-  -fx-background-color: linear-gradient(to right, rgba(255,244,229,0.9), -app-elevated);
+  -fx-background-color: linear-gradient(
+    to right,
+    rgba(255, 244, 229, 0.9),
+    -app-elevated
+  );
   -fx-effect: dropshadow(three-pass-box, rgba(250, 150, 50, 0.06), 8, 0, 0, 4);
 }
 

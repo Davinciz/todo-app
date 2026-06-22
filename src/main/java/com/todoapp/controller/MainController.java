@@ -18,14 +18,6 @@ import javafx.collections.ListChangeListener;
  * Orchestrator utama UI. Tugasnya hanya menghubungkan komponen-komponen
  * (table, dialog, detail panel, calendar, notification, theme) satu sama lain
  * dan menjadi titik masuk untuk semua aksi FXML (@FXML onAction).
- *
- * Logika tampilan masing-masing bagian didelegasikan ke:
- * - {@link ThemeManager}            : dark/light theme
- * - {@link TaskTableManager}        : tabel daftar task
- * - {@link TaskFormDialog}          : dialog create/edit task + attachment
- * - {@link TaskDetailPanel}         : panel detail task terpilih
- * - {@link DeadlineCalendarView}    : kalender & preview deadline
- * - {@link NotificationToastManager}: toast notifikasi deadline
  */
 public class MainController {
 
@@ -48,6 +40,7 @@ public class MainController {
     @FXML private Label detailTitleLabel;
     @FXML private Label detailMetaLabel;
     @FXML private Label detailCategoryLabel;
+    @FXML private Label detailCourseLabel;
     @FXML private Label detailDeadlineLabel;
     @FXML private Label detailPriorityLabel;
     @FXML private Label detailStatusLabel;
@@ -62,6 +55,7 @@ public class MainController {
     @FXML private TableView<Task> taskTableView;
     @FXML private TableColumn<Task, String> titleColumn;
     @FXML private TableColumn<Task, String> categoryColumn;
+    @FXML private TableColumn<Task, String> mataKuliahColumn;
     @FXML private TableColumn<Task, String> deadlineColumn;
     @FXML private TableColumn<Task, String> priorityColumn;
     @FXML private TableColumn<Task, String> statusColumn;
@@ -94,17 +88,16 @@ public class MainController {
         themeManager = new ThemeManager(rootPane, themeToggleButton, preferences);
 
         tableManager = new TaskTableManager(
-            taskTableView, titleColumn, categoryColumn, deadlineColumn,
-            priorityColumn, statusColumn, attachmentColumn
+                taskTableView, titleColumn, categoryColumn, mataKuliahColumn,
+                deadlineColumn, priorityColumn, statusColumn, attachmentColumn
         );
-        // Make columns fill the available width (avoid empty filler column)
-        taskTableView.setColumnResizePolicy(javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY);
+        taskTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableManager.setOnSelectionChanged(this::onTaskSelected);
 
         detailPanel = new TaskDetailPanel(
                 detailSectionLabel, detailCard, detailFactsGrid, detailDescriptionBox,
-                detailTitleLabel, detailMetaLabel, detailCategoryLabel, detailDeadlineLabel,
-                detailPriorityLabel, detailStatusLabel, detailAttachmentLabel,
+                detailTitleLabel, detailMetaLabel, detailCategoryLabel, detailCourseLabel,
+                detailDeadlineLabel, detailPriorityLabel, detailStatusLabel, detailAttachmentLabel,
                 detailDescriptionArea, editTaskButton
         );
 
@@ -113,7 +106,6 @@ public class MainController {
                 deadlinePreviewBox, deadlinePreviewTitleLabel, deadlinePreviewList
         );
         calendarView.setTaskSupplier(() -> tableManager.getTaskList());
-        // Re-render calendar whenever the task list changes (add/update/delete)
         tableManager.getTaskList().addListener((ListChangeListener<Task>) change -> {
             calendarView.clearPreview();
             calendarView.render();

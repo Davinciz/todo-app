@@ -11,32 +11,6 @@ Aplikasi desktop untuk melacak tugas (to-do list), dibangun dengan **JavaFX**, *
 - Highlight otomatis untuk tugas yang sudah lewat deadline (overdue) dan tugas yang selesai
 - Data tersimpan permanen di file SQLite lokal (`data/todo.db`)
 
-## Struktur Folder
-
-```
-todo-app/
-├── pom.xml                          # Konfigurasi Maven (dependency JavaFX & SQLite)
-├── .vscode/                         # Konfigurasi VS Code (settings & launch)
-├── data/
-│   ├── todo.db                      # Database SQLite (dibuat otomatis saat run pertama)
-│   └── attachments/                 # Tempat penyimpanan file lampiran yang di-upload
-└── src/
-    ├── main/
-    │   ├── java/com/todoapp/
-    │   │   ├── MainApp.java         # Entry point aplikasi
-    │   │   ├── model/Task.java      # Model data Task
-    │   │   ├── dao/TaskDAO.java     # Operasi CRUD ke database
-    │   │   ├── controller/MainController.java  # Logic UI
-    │   │   └── util/
-    │   │       ├── DatabaseConnection.java      # Koneksi & inisialisasi SQLite
-    │   │       └── FileAttachmentManager.java   # Kelola file lampiran
-    │   └── resources/
-    │       ├── fxml/MainView.fxml   # Layout UI utama
-    │       ├── css/style.css        # Styling aplikasi
-    │       └── images/              # Aset icon/gambar (opsional)
-    └── test/java/com/todoapp/       # Unit test
-```
-
 ## Prasyarat
 
 1. **JDK 17 atau lebih baru** — cek dengan `java -version`
@@ -81,12 +55,12 @@ java -jar target/todo-app-1.0.0.jar
 
 ## Troubleshooting
 
-| Masalah | Solusi |
-|---|---|
-| `mvn: command not found` | Install Maven dan pastikan sudah ditambahkan ke PATH sistem |
+| Masalah                                       | Solusi                                                                     |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| `mvn: command not found`                      | Install Maven dan pastikan sudah ditambahkan ke PATH sistem                |
 | Error `JavaFX runtime components are missing` | Pastikan menjalankan lewat `mvn javafx:run`, bukan langsung `java MainApp` |
-| Database error saat pertama run | Pastikan folder `data/` memiliki izin tulis (write permission) |
-| Lampiran tidak bisa dibuka | Pastikan ada aplikasi default di OS untuk membuka tipe file tersebut |
+| Database error saat pertama run               | Pastikan folder `data/` memiliki izin tulis (write permission)             |
+| Lampiran tidak bisa dibuka                    | Pastikan ada aplikasi default di OS untuk membuka tipe file tersebut       |
 
 ## Pengembangan Selanjutnya (Ide)
 

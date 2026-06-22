@@ -53,8 +53,8 @@ public class TaskDAO {
     public int addTask(Task task) {
         String sql = """
             INSERT INTO tasks (title, description, deadline, priority, status,
-                                category, attachment_path, attachment_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                category, mata_kuliah, attachment_path, attachment_name)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement ps = DatabaseConnection.getConnection()
@@ -79,13 +79,14 @@ public class TaskDAO {
     public boolean updateTask(Task task) {
         String sql = """
             UPDATE tasks SET title = ?, description = ?, deadline = ?, priority = ?,
-                              status = ?, category = ?, attachment_path = ?, attachment_name = ?
+                              status = ?, category = ?, mata_kuliah = ?,
+                              attachment_path = ?, attachment_name = ?
             WHERE id = ?
         """;
 
         try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
             bindTaskParams(ps, task);
-            ps.setInt(9, task.getId());
+            ps.setInt(10, task.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException("Gagal mengupdate task: " + e.getMessage(), e);
@@ -150,8 +151,9 @@ public class TaskDAO {
         ps.setString(4, task.getPriority().name());
         ps.setString(5, task.getStatus().name());
         ps.setString(6, task.getCategory());
-        ps.setString(7, task.getAttachmentPath());
-        ps.setString(8, task.getAttachmentName());
+        ps.setString(7, task.getMataKuliah());
+        ps.setString(8, task.getAttachmentPath());
+        ps.setString(9, task.getAttachmentName());
     }
 
     private Task mapRowToTask(ResultSet rs) throws SQLException {
@@ -168,6 +170,7 @@ public class TaskDAO {
         task.setPriority(Task.Priority.valueOf(rs.getString("priority")));
         task.setStatus(Task.Status.valueOf(rs.getString("status")));
         task.setCategory(rs.getString("category"));
+        task.setMataKuliah(rs.getString("mata_kuliah"));
         task.setAttachmentPath(rs.getString("attachment_path"));
         task.setAttachmentName(rs.getString("attachment_name"));
 
