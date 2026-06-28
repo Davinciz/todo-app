@@ -1,9 +1,10 @@
-/* ===================== Root & General ===================== */
+/* ===================== Root & General (Liquid Glass) ===================== */
 .root {
-  -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  -fx-font-family: "Inter", "Plus Jakarta Sans", "Segoe UI", sans-serif;
   -fx-font-weight: bold;
-  -fx-background-color: -app-background;
+  -fx-background-color: linear-gradient(to bottom right, #E8F5F0 0%, #F0F4F8 50%, #E0ECF8 100%);
 }
+
 
 .label {
   -fx-text-fill: -app-text-primary;

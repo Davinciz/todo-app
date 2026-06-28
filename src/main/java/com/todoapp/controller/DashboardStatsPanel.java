@@ -1,11 +1,14 @@
 package com.todoapp.controller;
 
 import com.todoapp.model.Task;
+import com.todoapp.util.GlassEffectBuilder;
+import com.todoapp.util.SpringAnimationUtil;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -140,6 +143,8 @@ public class DashboardStatsPanel {
         }
 
         row.setOnMouseClicked(event -> onTaskSelected.accept(task));
+        
+        SpringAnimationUtil.applyHoverAnimation(row);
 
         return row;
     }

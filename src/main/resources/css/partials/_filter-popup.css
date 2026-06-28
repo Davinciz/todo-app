@@ -1,0 +1,43 @@
+/* ===================== Filter Popup (Liquid Glass) ===================== */
+.filter-popup-content {
+  -fx-background-color: rgba(13, 17, 23, 0.92);
+  -fx-background-radius: 12;
+  -fx-border-color: rgba(0, 168, 120, 0.4);
+  -fx-border-radius: 12;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 24, 0, 0, 8);
+  -fx-padding: 20;
+}
+
+.filter-popup-title {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #00e0aa;
+  -fx-padding: 0 0 12 0;
+}
+
+.filter-popup-field-label {
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-text-fill: #9ca3af;
+  -fx-padding: 8 0 4 0;
+}
+
+.filter-popup-content .choice-box {
+  -fx-background-color: rgba(255, 255, 255, 0.08);
+  -fx-border-color: rgba(255, 255, 255, 0.2);
+  -fx-border-radius: 8;
+  -fx-background-radius: 8;
+  -fx-padding: 8 12 8 12;
+  -fx-max-width: Infinity;
+  -fx-text-fill: #e5e7eb;
+}
+
+.filter-popup-content .choice-box:hover {
+  -fx-border-color: rgba(0, 168, 120, 0.6);
+  -fx-background-color: rgba(255, 255, 255, 0.12);
+}
+
+.filter-popup-content .separator {
+  -fx-padding: 4 0 4 0;
+}

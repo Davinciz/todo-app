@@ -27,8 +27,9 @@
         <VBox spacing="0" styleClass="header-bar">
             <Label text="UniTask" styleClass="app-title"/>
             <HBox spacing="12" styleClass="toolbar" alignment="CENTER_LEFT">
-                <TextField fx:id="searchField" promptText="🔍 Cari tugas..." prefWidth="250" HBox.hgrow="SOMETIMES"/>
-                <ChoiceBox fx:id="filterStatusChoiceBox" prefWidth="160"/>
+                <TextField fx:id="searchField" promptText="🔍 Cari tugas..." prefWidth="200" HBox.hgrow="SOMETIMES"/>
+                <Button fx:id="filterButton" text="🔽 Filter" onAction="#handleShowFilterPopover"
+                        styleClass="filter-button"/>
                 <Button fx:id="newTaskButton" text="+ Tugas Baru" onAction="#handleShowNewTaskDialog"
                         styleClass="primary-button"/>
                 <Button fx:id="refreshButton" text="↻ Refresh" onAction="#handleRefresh"
@@ -45,7 +46,7 @@
     <!-- ===================== LEFT: Task Detail & Calendar ===================== -->
     <left>
         <ScrollPane fitToWidth="true" style="-fx-padding: 0; -fx-border-color: transparent;">
-            <VBox spacing="16" styleClass="form-panel detail-panel" prefWidth="340" maxWidth="380" minWidth="300">
+            <VBox spacing="16" styleClass="form-panel detail-panel glass-card" prefWidth="340" maxWidth="380" minWidth="300">
                 <padding>
                     <Insets top="20" right="18" bottom="20" left="18"/>
                 </padding>
@@ -85,6 +86,9 @@
 
                 <Button fx:id="editTaskButton" text="Edit Tugas" onAction="#handleShowEditTaskDialog"
                     maxWidth="200" prefWidth="160" disable="true" styleClass="secondary-button"/>
+                
+                <Button fx:id="openAttachmentButton" text="📎 Buka Lampiran"
+                    maxWidth="200" prefWidth="160" visible="false" managed="false" styleClass="primary-button"/>
 
                 <VBox spacing="10" styleClass="calendar-panel">
                     <HBox spacing="8" alignment="CENTER">
@@ -146,17 +150,19 @@
                     <VBox fx:id="upcomingDeadlinesBox" spacing="8"/>
                 </VBox>
 
-                <TableView fx:id="taskTableView" VBox.vgrow="ALWAYS" prefHeight="400">
-                    <columns>
-                        <TableColumn fx:id="titleColumn"      text="Judul Tugas"   prefWidth="200" minWidth="130"/>
-                        <TableColumn fx:id="categoryColumn"   text="Kategori"      prefWidth="110" minWidth="80"  maxWidth="150"/>
-                        <TableColumn fx:id="mataKuliahColumn" text="Mata Kuliah"   prefWidth="140" minWidth="100" maxWidth="200"/>
-                        <TableColumn fx:id="deadlineColumn"   text="Tenggat Waktu" prefWidth="120" minWidth="100" maxWidth="140"/>
-                        <TableColumn fx:id="priorityColumn"   text="Prioritas"     prefWidth="90"  minWidth="80"  maxWidth="120"/>
-                        <TableColumn fx:id="statusColumn"     text="Status"        prefWidth="110" minWidth="80"  maxWidth="140"/>
-                        <TableColumn fx:id="attachmentColumn" text="Lampiran"      prefWidth="110" minWidth="90"  maxWidth="170"/>
-                    </columns>
-                </TableView>
+                <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="table-scroll-pane" style="-fx-padding: 0; -fx-border-color: transparent; -fx-background-color: transparent;">
+                    <TableView fx:id="taskTableView" prefHeight="400" minWidth="880">
+                        <columns>
+                            <TableColumn fx:id="titleColumn"      text="Judul Tugas"   prefWidth="200" minWidth="130"/>
+                            <TableColumn fx:id="categoryColumn"   text="Kategori"      prefWidth="110" minWidth="80"  maxWidth="150"/>
+                            <TableColumn fx:id="mataKuliahColumn" text="Mata Kuliah"   prefWidth="140" minWidth="100" maxWidth="200"/>
+                            <TableColumn fx:id="deadlineColumn"   text="Tenggat Waktu" prefWidth="120" minWidth="100" maxWidth="140"/>
+                            <TableColumn fx:id="priorityColumn"   text="Prioritas"     prefWidth="90"  minWidth="80"  maxWidth="120"/>
+                            <TableColumn fx:id="statusColumn"     text="Status"        prefWidth="110" minWidth="80"  maxWidth="140"/>
+                            <TableColumn fx:id="attachmentColumn" text="Lampiran"      prefWidth="110" minWidth="90"  maxWidth="170"/>
+                        </columns>
+                    </TableView>
+                </ScrollPane>
 
                 <HBox spacing="10" alignment="CENTER_RIGHT">
                     <Region HBox.hgrow="ALWAYS"/>

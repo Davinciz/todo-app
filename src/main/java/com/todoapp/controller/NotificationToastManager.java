@@ -1,5 +1,6 @@
 package com.todoapp.controller;
 
+import com.todoapp.util.SpringAnimationUtil;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -164,7 +165,7 @@ public class NotificationToastManager {
         HBox.setHgrow(titleLabel, Priority.ALWAYS);
 
         VBox content = new VBox(6, header, messageLabel);
-        content.getStyleClass().addAll("notification-toast", getNotificationStyleClass(style));
+        content.getStyleClass().addAll("notification-toast", "glass-toast", getNotificationStyleClass(style));
         content.getStyleClass().add(currentThemeSupplier.get());
         content.getStylesheets().add(stylesheetUrl);
         content.setPrefWidth(340);
@@ -180,8 +181,17 @@ public class NotificationToastManager {
         popup.setX(window.getX() + window.getWidth() - content.getPrefWidth() - 28);
         popup.setY(window.getY() + 76);
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(6));
-        delay.setOnFinished(event -> popup.hide());
+        SpringAnimationUtil.createToastEntrance(content, Duration.millis(300)).play();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(4));
+        delay.setOnFinished(event -> {
+            SpringAnimationUtil.createToastExit(content, Duration.millis(250)).setOnFinished(e -> popup.hide());
+            SpringAnimationUtil.createToastExit(content, Duration.millis(250)).play();
+        });
+        
+        content.setOnMouseEntered(e -> delay.pause());
+        content.setOnMouseExited(e -> delay.play());
+        
         delay.play();
     }
 

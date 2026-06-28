@@ -1,12 +1,14 @@
 package com.todoapp.controller;
 
 import com.todoapp.model.Task;
+import com.todoapp.util.FileAttachmentManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -31,6 +33,9 @@ public class TaskDetailPanel {
     private final Label detailAttachmentLabel;
     private final TextArea detailDescriptionArea;
     private final Button editTaskButton;
+    private final Button openAttachmentButton;
+    
+    private Task currentTask;
 
     public TaskDetailPanel(Label detailSectionLabel,
                             VBox detailCard,
@@ -45,7 +50,8 @@ public class TaskDetailPanel {
                             Label detailStatusLabel,
                             Label detailAttachmentLabel,
                             TextArea detailDescriptionArea,
-                            Button editTaskButton) {
+                            Button editTaskButton,
+                            Button openAttachmentButton) {
         this.detailSectionLabel = detailSectionLabel;
         this.detailCard = detailCard;
         this.detailFactsGrid = detailFactsGrid;
@@ -60,12 +66,33 @@ public class TaskDetailPanel {
         this.detailAttachmentLabel = detailAttachmentLabel;
         this.detailDescriptionArea = detailDescriptionArea;
         this.editTaskButton = editTaskButton;
+        this.openAttachmentButton = openAttachmentButton;
+        
+        setupOpenAttachmentButton();
+    }
+    
+    private void setupOpenAttachmentButton() {
+        openAttachmentButton.setOnAction(e -> {
+            if (currentTask != null && currentTask.hasAttachment()) {
+                try {
+                    FileAttachmentManager.openAttachment(currentTask.getAttachmentPath());
+                } catch (IOException ex) {
+                    System.err.println("Error opening attachment: " + ex.getMessage());
+                }
+            }
+        });
     }
 
     /** Memperbarui seluruh isi panel detail sesuai task yang diberikan (null = kosongkan). */
     public void update(Task task) {
+        this.currentTask = task;
         boolean hasTask = task != null;
         editTaskButton.setDisable(!hasTask);
+        
+        boolean hasAttachment = hasTask && task.hasAttachment();
+        openAttachmentButton.setVisible(hasAttachment);
+        openAttachmentButton.setManaged(hasAttachment);
+        
         setVisible(hasTask);
 
         if (!hasTask) {

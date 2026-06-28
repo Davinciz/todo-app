@@ -6,6 +6,13 @@
   -fx-padding: 3 10 3 10;
   -fx-font-size: 10px;
   -fx-font-weight: bold;
+  -fx-cursor: hand;
+}
+
+.badge:hover {
+  -fx-scale-x: 1.05;
+  -fx-scale-y: 1.05;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0, 0, 2);
 }
 
 .priority-high {

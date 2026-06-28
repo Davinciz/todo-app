@@ -1,13 +1,14 @@
-/* ===================== Notification Toast ===================== */
+/* ===================== Notification Toast (Liquid Glass) ===================== */
 .notification-toast {
-  -fx-background-color: -app-surface;
-  -fx-background-radius: 8;
-  -fx-border-color: -app-border;
-  -fx-border-radius: 8;
+  -fx-background-color: rgba(255, 255, 255, 0.88);
+  -fx-background-radius: 12;
+  -fx-border-color: rgba(255, 255, 255, 0.18);
+  -fx-border-radius: 12;
   -fx-border-width: 1;
-  -fx-padding: 12 14 12 14;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.24), 18, 0, 0, 6);
+  -fx-padding: 12 16 12 16;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.20), 24, 0, 0, 8);
 }
+
 
 .notification-accent {
   -fx-border-color: -app-accent-primary;
@@ -57,4 +58,6 @@
   -fx-background-color: -app-elevated;
   -fx-border-color: -app-border;
   -fx-text-fill: -app-text-primary;
+  -fx-scale-x: 1.1;
+  -fx-scale-y: 1.1;
 }

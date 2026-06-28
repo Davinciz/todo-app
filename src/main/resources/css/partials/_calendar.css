@@ -24,19 +24,29 @@
   -fx-pref-width: 36;
   -fx-min-height: 36;
   -fx-pref-height: 36;
-  -fx-background-color: -app-surface;
-  -fx-background-radius: 8;
-  -fx-border-color: -app-border;
-  -fx-border-radius: 8;
+  -fx-background-color: transparent;
+  -fx-background-radius: 10;
+  -fx-border-color: transparent;
+  -fx-border-radius: 10;
   -fx-border-width: 1;
   -fx-cursor: hand;
 }
 
 .calendar-cell:hover {
-  -fx-background-color: -app-elevated;
-  -fx-border-color: -app-accent-primary;
-  -fx-translate-y: -2;
-  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 6, 0, 0, 3);
+  -fx-background-color: rgba(255, 255, 255, 0.35);
+}
+
+.calendar-cell.today-cell {
+  -fx-background-color: rgba(0, 168, 120, 0.20);
+  -fx-border-color: rgba(0, 168, 120, 0.50);
+  -fx-border-width: 1.5;
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.30), 8, 0, 0, 0);
+}
+
+.calendar-cell.selected-date-cell {
+  -fx-background-color: rgba(0, 168, 120, 0.30);
+  -fx-border-color: #00A878;
+  -fx-border-width: 1.5;
 }
 
 .calendar-day-number {
@@ -109,8 +119,12 @@
 }
 
 .deadline-preview-item:hover {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: -app-accent-soft;
   -fx-border-color: -app-accent-primary;
+  -fx-translate-y: -2;
+  -fx-scale-x: 1.01;
+  -fx-scale-y: 1.01;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 4);
 }
 
 .deadline-preview-item-title {

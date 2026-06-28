@@ -1,0 +1,199 @@
+/* ================================================================
+   LIQUID GLASS REUSABLE EFFECTS
+   UniTask — Glass Effect Components
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   GLASS CARD BASE
+   ---------------------------------------------------------------- */
+.glass-card {
+  -fx-background-color: rgba(255, 255, 255, 0.18);
+  -fx-background-radius: 16;
+  -fx-border-color: rgba(255, 255, 255, 0.28);
+  -fx-border-radius: 16;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 4);
+  -fx-padding: 16;
+}
+
+.glass-card:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.28);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 32, 0, 0, 6);
+}
+
+/* ----------------------------------------------------------------
+   GLASS BUTTON VARIANTS
+   ---------------------------------------------------------------- */
+.glass-button {
+  -fx-background-color: rgba(255, 255, 255, 0.25);
+  -fx-background-radius: 10;
+  -fx-border-color: rgba(255, 255, 255, 0.4);
+  -fx-border-radius: 10;
+  -fx-border-width: 1;
+  -fx-padding: 10 20;
+  -fx-text-fill: #1a1a2e;
+  -fx-font-weight: 600;
+  -fx-cursor: hand;
+}
+
+.glass-button:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.35);
+}
+
+.glass-button:pressed {
+  -fx-scale-x: 0.97;
+  -fx-scale-y: 0.97;
+}
+
+.glass-button-primary {
+  -fx-background-color: linear-gradient(to bottom, #00a878 0%, #00c896 100%);
+  -fx-background-radius: 10;
+  -fx-border-width: 0;
+  -fx-padding: 10 24;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.35), 12, 0, 0, 2);
+  -fx-cursor: hand;
+}
+
+.glass-button-primary:hover {
+  -fx-background-color: linear-gradient(to bottom, #00c896 0%, #00e0aa 100%);
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.45), 16, 0, 0, 3);
+}
+
+.glass-button-primary:pressed {
+  -fx-scale-x: 0.97;
+  -fx-scale-y: 0.97;
+}
+
+/* ----------------------------------------------------------------
+   GLASS PANEL VARIANTS
+   ---------------------------------------------------------------- */
+.glass-panel {
+  -fx-background-color: rgba(255, 255, 255, 0.22);
+  -fx-background-radius: 14;
+  -fx-border-color: rgba(255, 255, 255, 0.3);
+  -fx-border-radius: 14;
+  -fx-border-width: 1;
+  -fx-padding: 16;
+}
+
+.glass-panel-dark {
+  -fx-background-color: rgba(13, 17, 23, 0.65);
+  -fx-background-radius: 16;
+  -fx-border-color: rgba(255, 255, 255, 0.12);
+  -fx-border-radius: 16;
+  -fx-border-width: 1;
+}
+
+/* ----------------------------------------------------------------
+   GLASS NAVBAR / TOOLBAR
+   ---------------------------------------------------------------- */
+.glass-navbar {
+  -fx-background-color: rgba(255, 255, 255, 0.55);
+  -fx-border-color: transparent transparent rgba(255, 255, 255, 0.3) transparent;
+  -fx-border-width: 0 0 1 0;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 16, 0, 0, 2);
+}
+
+/* ----------------------------------------------------------------
+   GLASS INPUT FIELDS
+   ---------------------------------------------------------------- */
+.glass-input {
+  -fx-background-color: rgba(255, 255, 255, 0.5);
+  -fx-background-radius: 8;
+  -fx-border-color: rgba(0, 0, 0, 0.12);
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+  -fx-padding: 10 14;
+  -fx-text-fill: #0d1117;
+}
+
+.glass-input:focused {
+  -fx-border-color: rgba(0, 168, 120, 0.6);
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.25), 8, 0, 0, 0);
+}
+
+/* ----------------------------------------------------------------
+   GLASS SEARCH BAR
+   ---------------------------------------------------------------- */
+.glass-search {
+  -fx-background-color: rgba(255, 255, 255, 0.25);
+  -fx-background-radius: 8;
+  -fx-border-color: rgba(255, 255, 255, 0.4);
+  -fx-border-radius: 8;
+  -fx-border-width: 1;
+  -fx-padding: 8 12;
+}
+
+.glass-search:focused {
+  -fx-border-color: rgba(0, 168, 120, 0.6);
+  -fx-background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ----------------------------------------------------------------
+   GLASS MODAL OVERLAY
+   ---------------------------------------------------------------- */
+.glass-modal-overlay {
+  -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+.glass-modal-panel {
+  -fx-background-color: rgba(255, 255, 255, 0.85);
+  -fx-background-radius: 20;
+  -fx-border-color: rgba(255, 255, 255, 0.5);
+  -fx-border-radius: 20;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 40, 0, 0, 8);
+  -fx-padding: 24;
+}
+
+/* ----------------------------------------------------------------
+   GLASS TOAST NOTIFICATION
+   ---------------------------------------------------------------- */
+.glass-toast {
+  -fx-background-color: rgba(255, 255, 255, 0.88);
+  -fx-background-radius: 12;
+  -fx-border-color: rgba(255, 255, 255, 0.18);
+  -fx-border-radius: 12;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 24, 0, 0, 8);
+  -fx-padding: 12 16;
+}
+
+.glass-toast-dark {
+  -fx-background-color: rgba(13, 17, 23, 0.82);
+  -fx-text-fill: #e5e7eb;
+}
+
+/* ----------------------------------------------------------------
+   GLASS STAT CARD
+   ---------------------------------------------------------------- */
+.glass-stat-card {
+  -fx-background-color: rgba(255, 255, 255, 0.22);
+  -fx-background-radius: 14;
+  -fx-border-color: rgba(255, 255, 255, 0.3);
+  -fx-border-radius: 14;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 16, 0, 0, 3);
+  -fx-padding: 16;
+}
+
+.glass-stat-card:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.32);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 28, 0, 0, 5);
+}
+
+/* ----------------------------------------------------------------
+   GLASS BADGE
+   ---------------------------------------------------------------- */
+.glass-badge {
+  -fx-background-color: rgba(255, 255, 255, 0.3);
+  -fx-background-radius: 6;
+  -fx-border-color: rgba(0, 0, 0, 0.08);
+  -fx-border-radius: 6;
+  -fx-border-width: 1;
+  -fx-padding: 4 8;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}

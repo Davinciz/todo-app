@@ -1,9 +1,9 @@
-/* ===================== Table ===================== */
+/* ===================== Table (Liquid Glass) ===================== */
 .table-view {
-  -fx-background-color: -app-surface;
-  -fx-control-inner-background: -app-surface;
+  -fx-background-color: rgba(255, 255, 255, 0.18);
+  -fx-control-inner-background: rgba(255, 255, 255, 0.18);
   -fx-table-cell-border-color: transparent;
-  -fx-border-color: -app-border;
+  -fx-border-color: rgba(255, 255, 255, 0.28);
   -fx-border-radius: 10;
   -fx-border-width: 1;
   -fx-padding: 0;
@@ -12,23 +12,23 @@
 
 .table-view .column-header-background,
 .table-view .filler {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: rgba(0, 168, 120, 0.15);
   -fx-background-radius: 10 10 0 0;
 }
 
 .table-view .column-header-background .label {
-  -fx-text-fill: -app-accent-primary;
-  -fx-font-weight: 800;
+  -fx-text-fill: #00a878;
+  -fx-font-weight: bold;
   -fx-font-size: 12px;
   -fx-letter-spacing: 0.6px;
 }
 
 .table-view .column-header {
   -fx-padding: 14 10 14 10;
-  -fx-background-color: -app-elevated;
-  -fx-border-color: transparent;
-  -fx-border-width: 0;
-  -fx-border-style: none;
+  -fx-background-color: rgba(0, 168, 120, 0.15);
+  -fx-border-color: rgba(0, 168, 120, 0.3);
+  -fx-border-width: 0 0 1 0;
+  -fx-border-style: solid;
 }
 
 .table-view .column-header:first-visible {
@@ -40,17 +40,17 @@
 }
 
 .table-row-cell {
-  -fx-background-color: -app-surface;
+  -fx-background-color: rgba(255, 255, 255, 0.2);
   -fx-padding: 8 12 8 12;
-  -fx-text-fill: -app-text-primary;
+  -fx-text-fill: #0d1117;
   -fx-font-size: 12px;
   -fx-font-weight: 600;
-  -fx-border-color: -app-border;
+  -fx-border-color: rgba(0, 0, 0, 0.05);
   -fx-border-width: 0 0 1 0;
 }
 
 .table-row-cell:odd {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: rgba(255, 255, 255, 0.08);
 }
 
 .table-cell {
@@ -62,15 +62,15 @@
 }
 
 .table-row-cell:hover {
-  -fx-background-color: -app-accent-soft;
-  -fx-translate-y: -1;
-  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.04), 6, 0, 0, 2);
+  -fx-background-color: rgba(0, 168, 120, 0.1);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 8, 0, 0, 2);
+  -fx-cursor: hand;
 }
 
 .table-row-cell:selected {
-  -fx-background-color: -app-accent-soft;
-  -fx-border-color: -app-accent-primary;
-  -fx-border-width: 0 0 1 4;
+  -fx-background-color: rgba(0, 168, 120, 0.22);
+  -fx-border-color: #00a878;
+  -fx-border-width: 0 0 0 3;
 }
 
 .table-row-cell:empty,

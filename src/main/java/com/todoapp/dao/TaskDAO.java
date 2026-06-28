@@ -142,6 +142,89 @@ public class TaskDAO {
         return tasks;
     }
 
+    // =========================================================
+    // FILTER METHODS (Kategori, Mata Kuliah, Multi-filter)
+    // =========================================================
+
+    /** Mengambil daftar kategori unik yang pernah dipakai. */
+    public List<String> getDistinctCategories() {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT DISTINCT category FROM tasks WHERE category IS NOT NULL AND category != '' ORDER BY category ASC";
+        try (Statement stmt = DatabaseConnection.getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                result.add(rs.getString("category"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Gagal mengambil daftar kategori: " + e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /** Mengambil daftar mata kuliah unik yang pernah dipakai. */
+    public List<String> getDistinctMataKuliah() {
+        List<String> result = new ArrayList<>();
+        String sql = "SELECT DISTINCT mata_kuliah FROM tasks WHERE mata_kuliah IS NOT NULL AND mata_kuliah != '' ORDER BY mata_kuliah ASC";
+        try (Statement stmt = DatabaseConnection.getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                result.add(rs.getString("mata_kuliah"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Gagal mengambil daftar mata kuliah: " + e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /**
+     * Filter tasks dengan kombinasi keyword, status, kategori, dan mata kuliah.
+     * Semua parameter opsional (null/"Semua"/"" = tidak difilter).
+     */
+    public List<Task> getFilteredTasks(String keyword, String status,
+                                        String category, String mataKuliah) {
+        List<Task> tasks = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM tasks WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (keyword != null && !keyword.isBlank()) {
+            sql.append(" AND (title LIKE ? OR description LIKE ?)");
+            String like = "%" + keyword.trim() + "%";
+            params.add(like);
+            params.add(like);
+        }
+        if (status != null && !status.equals("Semua") && !status.isBlank()) {
+            sql.append(" AND status = ?");
+            params.add(status);
+        }
+        if (category != null && !category.equals("Semua") && !category.isBlank()) {
+            sql.append(" AND category = ?");
+            params.add(category);
+        }
+        if (mataKuliah != null && !mataKuliah.equals("Semua") && !mataKuliah.isBlank()) {
+            sql.append(" AND mata_kuliah = ?");
+            params.add(mataKuliah);
+        }
+
+        sql.append(" ORDER BY CASE WHEN deadline IS NULL THEN 1 ELSE 0 END, deadline ASC");
+
+        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                Object param = params.get(i);
+                if (param instanceof String) {
+                    ps.setString(i + 1, (String) param);
+                }
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    tasks.add(mapRowToTask(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Gagal memfilter tasks: " + e.getMessage(), e);
+        }
+        return tasks;
+    }
+
     // --- Helper methods ---
 
     private void bindTaskParams(PreparedStatement ps, Task task) throws SQLException {

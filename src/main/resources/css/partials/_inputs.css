@@ -1,9 +1,9 @@
-/* ===================== Header (toolbar layout) ===================== */
+/* ===================== Header (toolbar layout - Liquid Glass) ===================== */
 .header-bar {
-  -fx-background-color: -app-background;
-  -fx-border-color: -app-border;
+  -fx-background-color: rgba(255, 255, 255, 0.55);
+  -fx-border-color: rgba(255, 255, 255, 0.30);
   -fx-border-width: 0 0 1 0;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 14, 0, 0, 4);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 16, 0, 0, 2);
 }
 
 .app-title {
@@ -19,7 +19,7 @@
   -fx-spacing: 12;
 }
 
-/* ===================== Inputs: text-field, text-area, choice-box, date-picker ===================== */
+/* ===================== Inputs: text-field, text-area, choice-box, date-picker (Liquid Glass) ===================== */
 .toolbar .text-field,
 .toolbar .choice-box,
 .form-panel .text-field,
@@ -31,14 +31,30 @@
 .dialog-form .date-picker,
 .dialog-form .choice-box {
   -fx-background-radius: 8;
-  -fx-background-color: -app-surface;
-  -fx-text-fill: -app-text-primary;
+  -fx-background-color: rgba(255, 255, 255, 0.50);
+  -fx-text-fill: #0D1117;
   -fx-border-radius: 8;
-  -fx-border-color: -app-border;
+  -fx-border-color: rgba(0, 0, 0, 0.12);
   -fx-border-width: 1;
-  -fx-padding: 8 12 8 12;
+  -fx-padding: 10 14 10 14;
   -fx-font-size: 11px;
-  -fx-font-weight: bold;
+  -fx-font-weight: 600;
+}
+
+.toolbar .text-field {
+  -fx-background-color: rgba(255, 255, 255, 0.25);
+  -fx-border-color: rgba(255, 255, 255, 0.40);
+}
+
+.toolbar .text-field:focused {
+  -fx-border-color: rgba(0, 168, 120, 0.60);
+  -fx-background-color: rgba(255, 255, 255, 0.35);
+}
+
+.text-field:focused,
+.text-area:focused {
+  -fx-border-color: rgba(0, 168, 120, 0.60);
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.25), 8, 0, 0, 0);
 }
 
 .text-field,
@@ -118,6 +134,8 @@
 
 .date-picker-popup .day-cell:hover {
   -fx-background-color: -app-elevated;
+  -fx-scale-x: 1.05;
+  -fx-scale-y: 1.05;
 }
 
 .date-picker-popup .selected {

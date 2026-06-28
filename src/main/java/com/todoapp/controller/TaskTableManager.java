@@ -1,6 +1,7 @@
 package com.todoapp.controller;
 
 import com.todoapp.model.Task;
+import com.todoapp.util.SpringAnimationUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,24 +29,32 @@ public class TaskTableManager {
     public TaskTableManager(TableView<Task> taskTableView,
                              TableColumn<Task, String> titleColumn,
                              TableColumn<Task, String> categoryColumn,
+                             TableColumn<Task, String> mataKuliahColumn,
                              TableColumn<Task, String> deadlineColumn,
                              TableColumn<Task, String> priorityColumn,
                              TableColumn<Task, String> statusColumn,
                              TableColumn<Task, String> attachmentColumn) {
         this.taskTableView = taskTableView;
-        setupColumns(titleColumn, categoryColumn, deadlineColumn, priorityColumn, statusColumn, attachmentColumn);
+        setupColumns(titleColumn, categoryColumn, mataKuliahColumn,
+                deadlineColumn, priorityColumn, statusColumn, attachmentColumn);
         setupRowFactory();
         taskTableView.setItems(taskList);
     }
 
     private void setupColumns(TableColumn<Task, String> titleColumn,
                                TableColumn<Task, String> categoryColumn,
+                               TableColumn<Task, String> mataKuliahColumn,
                                TableColumn<Task, String> deadlineColumn,
                                TableColumn<Task, String> priorityColumn,
                                TableColumn<Task, String> statusColumn,
                                TableColumn<Task, String> attachmentColumn) {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        mataKuliahColumn.setCellValueFactory(data -> {
+            String mk = data.getValue().getMataKuliah();
+            return new SimpleStringProperty(mk != null && !mk.isBlank() ? mk : "-");
+        });
 
         deadlineColumn.setCellValueFactory(data -> {
             var deadline = data.getValue().getDeadline();
@@ -69,7 +78,6 @@ public class TaskTableManager {
     }
 
     private void setupRowFactory() {
-        // Highlight baris hanya untuk kondisi khusus: overdue atau selesai.
         taskTableView.setRowFactory(tv -> new TableRow<Task>() {
             @Override
             protected void updateItem(Task task, boolean empty) {
@@ -84,6 +92,8 @@ public class TaskTableManager {
                 } else if (task.getStatus() == Task.Status.DONE) {
                     getStyleClass().add("done-row");
                 }
+                
+                SpringAnimationUtil.applyHoverAnimation(this);
             }
         });
     }

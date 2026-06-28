@@ -2,13 +2,17 @@ package com.todoapp.controller;
 
 import com.todoapp.dao.TaskDAO;
 import com.todoapp.model.Task;
+import com.todoapp.util.ButtonAnimationUtil;
 import com.todoapp.util.FileAttachmentManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -27,10 +31,11 @@ public class MainController {
     @FXML private Button refreshButton;
     @FXML private Button newTaskButton;
     @FXML private Button editTaskButton;
+    @FXML private Button openAttachmentButton;
     @FXML private Button themeToggleButton;
+    @FXML private Button filterButton;
 
     @FXML private TextField searchField;
-    @FXML private ChoiceBox<String> filterStatusChoiceBox;
     @FXML private ChoiceBox<String> notificationStyleChoiceBox;
 
     @FXML private Label detailSectionLabel;
@@ -73,6 +78,11 @@ public class MainController {
     private final TaskDAO taskDAO = new TaskDAO();
     private final Preferences preferences = Preferences.userNodeForPackage(MainController.class);
 
+    // Internal filter controls (di dalam popup)
+    private final ChoiceBox<String> filterStatusChoiceBox = new ChoiceBox<>();
+    private final ChoiceBox<String> filterCategoryChoiceBox = new ChoiceBox<>();
+    private final ChoiceBox<String> filterMataKuliahChoiceBox = new ChoiceBox<>();
+
     private ThemeManager themeManager;
     private TaskTableManager tableManager;
     private TaskDetailPanel detailPanel;
@@ -98,7 +108,7 @@ public class MainController {
                 detailSectionLabel, detailCard, detailFactsGrid, detailDescriptionBox,
                 detailTitleLabel, detailMetaLabel, detailCategoryLabel, detailCourseLabel,
                 detailDeadlineLabel, detailPriorityLabel, detailStatusLabel, detailAttachmentLabel,
-                detailDescriptionArea, editTaskButton
+                detailDescriptionArea, editTaskButton, openAttachmentButton
         );
 
         calendarView = new DeadlineCalendarView(
@@ -126,27 +136,147 @@ public class MainController {
         );
         dashboardStatsPanel.setOnTaskSelected(this::selectTask);
 
-        setupFilterChoiceBox();
+        setupInternalFilters();
         setupSearchListener();
 
+        setupButtonAnimations();
+
         loadAllTasks();
+        refreshFilterDropdowns();
         detailPanel.update(null);
+    }
+    // =========================================================
+    // BUTTON ANIMATIONS
+    // =========================================================
+
+    private void setupButtonAnimations() {
+        ButtonAnimationUtil.addHoverAndPressedScale(newTaskButton);
+        ButtonAnimationUtil.addHoverAndPressedScale(editTaskButton);
+        ButtonAnimationUtil.addHoverAndPressedScale(deleteButton);
+        ButtonAnimationUtil.addHoverAndPressedScale(refreshButton);
+        ButtonAnimationUtil.addHoverAndPressedScale(themeToggleButton, 1.08);
+        ButtonAnimationUtil.addHoverAndPressedScale(filterButton);
     }
 
     // =========================================================
-    // SETUP
+    // SETUP FILTER (internal ChoiceBox di dalam popup)
     // =========================================================
 
-    private void setupFilterChoiceBox() {
+    private void setupInternalFilters() {
         filterStatusChoiceBox.setItems(FXCollections.observableArrayList(
                 "Semua", "PENDING", "IN_PROGRESS", "DONE"
         ));
         filterStatusChoiceBox.setValue("Semua");
         filterStatusChoiceBox.setOnAction(e -> applyFilter());
+
+        filterCategoryChoiceBox.setValue("Semua");
+        filterCategoryChoiceBox.setOnAction(e -> applyFilter());
+
+        filterMataKuliahChoiceBox.setValue("Semua");
+        filterMataKuliahChoiceBox.setOnAction(e -> applyFilter());
+    }
+
+    /** Memperbarui isi dropdown kategori & mata kuliah dari database. */
+    private void refreshFilterDropdowns() {
+        String prevCategory = filterCategoryChoiceBox.getValue();
+        String prevMk = filterMataKuliahChoiceBox.getValue();
+
+        List<String> categories = taskDAO.getDistinctCategories();
+        List<String> mkList = taskDAO.getDistinctMataKuliah();
+
+        filterCategoryChoiceBox.setItems(FXCollections.observableArrayList("Semua"));
+        filterCategoryChoiceBox.getItems().addAll(categories);
+        filterCategoryChoiceBox.setValue(categories.contains(prevCategory) ? prevCategory : "Semua");
+
+        filterMataKuliahChoiceBox.setItems(FXCollections.observableArrayList("Semua"));
+        filterMataKuliahChoiceBox.getItems().addAll(mkList);
+        filterMataKuliahChoiceBox.setValue(mkList.contains(prevMk) ? prevMk : "Semua");
+
+        // Update label tombol filter dengan badge jumlah filter aktif
+        updateFilterButtonText();
+    }
+
+    private void updateFilterButtonText() {
+        int activeCount = 0;
+        if (!"Semua".equals(filterStatusChoiceBox.getValue())) activeCount++;
+        if (!"Semua".equals(filterCategoryChoiceBox.getValue())) activeCount++;
+        if (!"Semua".equals(filterMataKuliahChoiceBox.getValue())) activeCount++;
+
+        if (activeCount > 0) {
+            filterButton.setText("🔽 Filter (" + activeCount + ")");
+            filterButton.getStyleClass().add("filter-active");
+        } else {
+            filterButton.setText("🔽 Filter");
+            filterButton.getStyleClass().remove("filter-active");
+        }
     }
 
     private void setupSearchListener() {
         searchField.textProperty().addListener((obs, oldVal, newVal) -> applyFilter());
+    }
+
+    // =========================================================
+    // FILTER POPUP
+    // =========================================================
+
+    @FXML
+    private void handleShowFilterPopover() {
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.setHideOnEscape(true);
+
+        Label headerLabel = new Label("Filter Tugas");
+        headerLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: 800; -fx-text-fill: -app-accent-primary; -fx-padding: 0 0 10 0;");
+
+        Label statusLabel = new Label("Status");
+        statusLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: -app-text-secondary;");
+        filterStatusChoiceBox.setMaxWidth(Double.MAX_VALUE);
+
+        Label categoryLabel = new Label("Kategori");
+        categoryLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: -app-text-secondary;");
+        filterCategoryChoiceBox.setMaxWidth(Double.MAX_VALUE);
+
+        Label mkLabel = new Label("Mata Kuliah");
+        mkLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: -app-text-secondary;");
+        filterMataKuliahChoiceBox.setMaxWidth(Double.MAX_VALUE);
+
+        Button resetButton = new Button("Reset Filter");
+        resetButton.setMaxWidth(Double.MAX_VALUE);
+        resetButton.getStyleClass().add("secondary-button");
+        resetButton.setOnAction(e -> {
+            filterStatusChoiceBox.setValue("Semua");
+            filterCategoryChoiceBox.setValue("Semua");
+            filterMataKuliahChoiceBox.setValue("Semua");
+            popup.hide();
+            applyFilter();
+        });
+
+        Button closeButton = new Button("Tutup");
+        closeButton.setMaxWidth(Double.MAX_VALUE);
+        closeButton.getStyleClass().add("primary-button");
+        closeButton.setOnAction(e -> popup.hide());
+
+        VBox content = new VBox(8,
+                headerLabel,
+                statusLabel, filterStatusChoiceBox,
+                categoryLabel, filterCategoryChoiceBox,
+                mkLabel, filterMataKuliahChoiceBox,
+                new Separator(),
+                resetButton, closeButton
+        );
+        content.getStyleClass().add("filter-popup-content");
+        headerLabel.getStyleClass().add("filter-popup-title");
+        statusLabel.getStyleClass().add("filter-popup-field-label");
+        categoryLabel.getStyleClass().add("filter-popup-field-label");
+        mkLabel.getStyleClass().add("filter-popup-field-label");
+        content.setPadding(new Insets(16));
+        content.setPrefWidth(220);
+
+        popup.getContent().add(content);
+
+        // Posisikan popup di bawah tombol filter
+        popup.show(filterButton, filterButton.localToScreen(0, filterButton.getHeight()).getX(),
+                   filterButton.localToScreen(0, filterButton.getHeight()).getY());
     }
 
     // =========================================================
@@ -170,22 +300,17 @@ public class MainController {
     private void applyFilter() {
         String keyword = searchField.getText();
         String statusFilter = filterStatusChoiceBox.getValue();
+        String categoryFilter = filterCategoryChoiceBox.getValue();
+        String mkFilter = filterMataKuliahChoiceBox.getValue();
 
         try {
-            List<Task> result;
-            if (keyword != null && !keyword.isBlank()) {
-                result = taskDAO.searchTasks(keyword.trim());
-            } else {
-                result = taskDAO.getAllTasks();
-            }
-
-            if (statusFilter != null && !statusFilter.equals("Semua")) {
-                result.removeIf(t -> !t.getStatus().name().equals(statusFilter));
-            }
-
+            List<Task> result = taskDAO.getFilteredTasks(
+                    keyword, statusFilter, categoryFilter, mkFilter
+            );
             tableManager.setTasks(result);
             calendarView.clearPreview();
             calendarView.render();
+            updateFilterButtonText();
         } catch (Exception e) {
             showError("Gagal memfilter data", e.getMessage());
         }
@@ -212,6 +337,7 @@ public class MainController {
 
     private void onTaskSaved(Task savedTask, String statusMessage) {
         loadAllTasks();
+        refreshFilterDropdowns();
         setStatus(statusMessage);
     }
 
@@ -238,6 +364,7 @@ public class MainController {
                     setStatus("Tugas \"" + task.getTitle() + "\" berhasil dihapus.");
                     detailPanel.update(null);
                     loadAllTasks();
+                    refreshFilterDropdowns();
                 } catch (Exception e) {
                     showError("Gagal menghapus tugas", e.getMessage());
                 }
@@ -249,7 +376,10 @@ public class MainController {
     private void handleRefresh() {
         searchField.clear();
         filterStatusChoiceBox.setValue("Semua");
+        filterCategoryChoiceBox.setValue("Semua");
+        filterMataKuliahChoiceBox.setValue("Semua");
         loadAllTasks();
+        refreshFilterDropdowns();
         tableManager.clearSelection();
         detailPanel.update(null);
     }

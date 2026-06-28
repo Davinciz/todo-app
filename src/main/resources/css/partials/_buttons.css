@@ -1,37 +1,40 @@
-/* ===================== Buttons ===================== */
+/* ===================== Buttons (Liquid Glass) ===================== */
 .button {
-  -fx-background-color: -app-surface;
-  -fx-background-radius: 8;
+  -fx-background-color: rgba(255, 255, 255, 0.25);
+  -fx-background-radius: 10;
   -fx-cursor: hand;
-  -fx-padding: 8 16 8 16;
-  -fx-text-fill: -app-text-primary;
+  -fx-padding: 10 20 10 20;
+  -fx-text-fill: #1A1A2E;
   -fx-font-size: 11px;
-  -fx-font-weight: bold;
-  -fx-border-radius: 8;
-  -fx-border-color: -app-border;
+  -fx-font-weight: 600;
+  -fx-border-radius: 10;
+  -fx-border-color: rgba(255, 255, 255, 0.40);
   -fx-border-width: 1;
 }
 
 .button:hover,
 .refresh-button:hover {
-  -fx-background-color: -app-elevated;
-  -fx-border-color: -app-accent-primary;
+  -fx-background-color: rgba(255, 255, 255, 0.35);
+  -fx-border-color: rgba(0, 168, 120, 0.60);
 }
 
 .button:pressed {
-  -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.22), 4, 0, 0, 1);
+  -fx-scale-x: 0.97;
+  -fx-scale-y: 0.97;
 }
 
 .primary-button {
-  -fx-background-color: -app-accent-primary;
+  -fx-background-color: linear-gradient(to bottom, #00A878 0%, #00C896 100%);
   -fx-text-fill: #ffffff;
   -fx-font-weight: bold;
-  -fx-border-color: -app-accent-primary;
+  -fx-border-width: 0;
+  -fx-padding: 10 24 10 24;
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.35), 12, 0, 0, 2);
 }
 
 .primary-button:hover {
-  -fx-background-color: -app-accent-hover;
-  -fx-border-color: -app-accent-hover;
+  -fx-background-color: linear-gradient(to bottom, #00C896 0%, #00E0AA 100%);
+  -fx-effect: dropshadow(gaussian, rgba(0, 168, 120, 0.45), 16, 0, 0, 3);
 }
 
 .refresh-button {
@@ -51,6 +54,8 @@
   -fx-background-color: -badge-high-text;
   -fx-text-fill: #ffffff;
   -fx-border-color: -badge-high-text;
+  -fx-scale-x: 1.04;
+  -fx-scale-y: 1.04;
 }
 
 .theme-toggle-button {
@@ -70,6 +75,8 @@
   -fx-background-color: -app-accent-primary;
   -fx-text-fill: #ffffff;
   -fx-border-color: -app-accent-primary;
+  -fx-scale-x: 1.08;
+  -fx-scale-y: 1.08;
 }
 
 .notification-style-choice {
@@ -90,4 +97,25 @@
   -fx-pref-width: 32;
   -fx-padding: 5 0 5 0;
   -fx-font-size: 15px;
+}
+
+.filter-button {
+  -fx-background-color: transparent;
+  -fx-text-fill: -app-text-primary;
+  -fx-border-color: -app-border;
+  -fx-padding: 8 12 8 12;
+}
+
+.filter-button:hover {
+  -fx-background-color: -app-elevated;
+  -fx-border-color: -app-accent-primary;
+  -fx-scale-x: 1.04;
+  -fx-scale-y: 1.04;
+}
+
+.filter-button.filter-active {
+  -fx-background-color: -app-accent-soft;
+  -fx-text-fill: -app-accent-primary;
+  -fx-border-color: -app-accent-primary;
+  -fx-font-weight: 800;
 }

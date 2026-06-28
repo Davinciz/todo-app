@@ -3,6 +3,7 @@ package com.todoapp.controller;
 import com.todoapp.dao.TaskDAO;
 import com.todoapp.model.Task;
 import com.todoapp.util.FileAttachmentManager;
+import com.todoapp.util.SpringAnimationUtil;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;

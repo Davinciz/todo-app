@@ -1,5 +1,5 @@
 /* ===================================================================
-   STYLE.CSS — File induk stylesheet aplikasi.
+   STYLE.CSS — File induk stylesheet aplikasi (Liquid Glass Edition)
    Jangan diisi rule CSS langsung di sini; cukup @import.
    Kode Java (MainController, ThemeManager, TaskFormDialog,
    NotificationToastManager) memanggil file ini lewat:
@@ -7,14 +7,17 @@
    jadi path & nama file ini tidak boleh berubah.
 
    URUTAN @import PENTING:
-   1) _tokens.css harus paling pertama — mendefinisikan semua variabel
-      (-app-*, -badge-*, -row-flag-*) yang dipakai oleh partial lainnya.
-   2) Sisanya bebas urutan secara fungsional, tapi dikelompokkan
-      dari yang paling umum (base) ke yang paling spesifik (dialog).
+   1) glass-tokens.css — Liquid Glass design tokens (warna, blur, radius)
+   2) glass-effects.css — Reusable glass components
+   3) _tokens.css — Legacy tokens (backward compatibility)
+   4) Partials lainnya dari yang paling umum ke spesifik
    =================================================================== */
 
+@import "glass-tokens.css";
+@import "glass-effects.css";
 @import "partials/_tokens.css";
 @import "partials/_base.css";
+@import "partials/_animations.css";
 @import "partials/_inputs.css";
 @import "partials/_buttons.css";
 @import "partials/_notifications.css";
@@ -25,3 +28,4 @@
 @import "partials/_calendar.css";
 @import "partials/_dialog.css";
 @import "partials/_statusbar-scroll.css";
+@import "partials/_filter-popup.css";

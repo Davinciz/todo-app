@@ -1,0 +1,133 @@
+/* ================================================================
+   LIQUID GLASS DESIGN TOKENS
+   UniTask — Glass Token Foundation
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   COLOR PALETTE — GLASS SURFACES
+   ---------------------------------------------------------------- */
+.root {
+  /* Glass Surface Colors */
+  -fx-glass-white: rgba(255, 255, 255, 0.18);
+  -fx-glass-white-strong: rgba(255, 255, 255, 0.32);
+  -fx-glass-tint-green: rgba(0, 168, 120, 0.12);
+  -fx-glass-tint-green-str: rgba(0, 168, 120, 0.22);
+  -fx-glass-dark: rgba(13, 17, 23, 0.65);
+
+  /* Glass Borders & Shadows */
+  -fx-glass-border: rgba(255, 255, 255, 0.28);
+  -fx-glass-shadow: rgba(0, 0, 0, 0.18);
+  -fx-glass-glow-green: rgba(0, 168, 120, 0.45);
+
+  /* Base Background */
+  -fx-bg-base: #f0f4f8;
+  -fx-bg-gradient-start: #e8f5f0;
+  -fx-bg-gradient-mid: #f0f4f8;
+  -fx-bg-gradient-end: #e0ecf8;
+
+  /* Typography Colors */
+  -fx-text-primary: #0d1117;
+  -fx-text-secondary: #4a5568;
+  -fx-text-on-glass: #1a1a2e;
+  -fx-text-muted: #6b7280;
+
+  /* Brand & Status Colors */
+  -fx-brand-teal: #00a878;
+  -fx-brand-teal-hover: #00c896;
+  -fx-success: #22c55e;
+  -fx-warning: #f59e0b;
+  -fx-error: #ef4444;
+  -fx-info: #3b82f6;
+  -fx-indigo: #6366f1;
+}
+
+/* ----------------------------------------------------------------
+   GLASS OPACITY LEVELS
+   ---------------------------------------------------------------- */
+.root {
+  -fx-glass-opacity-card: 0.72;
+  -fx-glass-opacity-modal: 0.85;
+  -fx-glass-opacity-toast: 0.9;
+  -fx-glass-opacity-navbar: 0.55;
+  -fx-glass-opacity-stat: 0.22;
+}
+
+/* ----------------------------------------------------------------
+   BLUR INTENSITIES
+   ---------------------------------------------------------------- */
+.root {
+  -fx-blur-light: 6;
+  -fx-blur-medium: 10;
+  -fx-blur-heavy: 16;
+  -fx-blur-backdrop: 20;
+}
+
+/* ----------------------------------------------------------------
+   BORDER RADIUS SCALE
+   ---------------------------------------------------------------- */
+.root {
+  -fx-radius-sm: 8px;
+  -fx-radius-md: 10px;
+  -fx-radius-lg: 14px;
+  -fx-radius-xl: 16px;
+  -fx-radius-2xl: 20px;
+  -fx-radius-card: 16px;
+  -fx-radius-button: 10px;
+  -fx-radius-input: 8px;
+  -fx-radius-toast: 12px;
+  -fx-radius-modal: 20px;
+  -fx-radius-stat: 14px;
+}
+
+/* ----------------------------------------------------------------
+   SPACING SCALE
+   ---------------------------------------------------------------- */
+.root {
+  -fx-space-xs: 4px;
+  -fx-space-sm: 8px;
+  -fx-space-md: 12px;
+  -fx-space-lg: 16px;
+  -fx-space-xl: 20px;
+  -fx-space-2xl: 24px;
+  -fx-space-3xl: 32px;
+}
+
+/* ----------------------------------------------------------------
+   SHADOW DEFINITIONS
+   ---------------------------------------------------------------- */
+.root {
+  -fx-shadow-sm: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 8, 0, 0, 2);
+  -fx-shadow-md: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 16, 0, 0, 3);
+  -fx-shadow-lg: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 20, 0, 0, 4);
+  -fx-shadow-xl: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 32, 0, 0, 6);
+  -fx-shadow-2xl: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 40, 0, 0, 8);
+}
+
+/* ----------------------------------------------------------------
+   GLOW DEFINITIONS
+   ---------------------------------------------------------------- */
+.root {
+  -fx-glow-green: dropshadow(gaussian, rgba(0, 168, 120, 0.3), 8, 0, 0, 0);
+  -fx-glow-green-strong: dropshadow(
+    gaussian,
+    rgba(0, 168, 120, 0.45),
+    12,
+    0,
+    0,
+    0
+  );
+  -fx-glow-success: dropshadow(gaussian, rgba(34, 197, 94, 0.4), 8, 0, 0, 0);
+  -fx-glow-error: dropshadow(gaussian, rgba(239, 68, 68, 0.4), 8, 0, 0, 0);
+  -fx-glow-warning: dropshadow(gaussian, rgba(245, 158, 11, 0.4), 8, 0, 0, 0);
+}
+
+/* ----------------------------------------------------------------
+   ANIMATION TIMING
+   ---------------------------------------------------------------- */
+.root {
+  -fx-timing-fast: 100ms;
+  -fx-timing-normal: 150ms;
+  -fx-timing-medium: 200ms;
+  -fx-timing-slow: 300ms;
+  -fx-timing-modal: 250ms;
+}

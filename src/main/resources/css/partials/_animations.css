@@ -1,0 +1,134 @@
+/* ===================== Animations & Transitions ===================== */
+
+.button,
+.primary-button,
+.danger-button,
+.refresh-button,
+.theme-toggle-button,
+.filter-button,
+.calendar-nav-button,
+.notification-style-choice {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.button:hover,
+.primary-button:hover,
+.danger-button:hover,
+.theme-toggle-button:hover,
+.filter-button:hover {
+  -fx-transition: all 0.15s ease-in;
+}
+
+.button:pressed,
+.primary-button:pressed,
+.danger-button:pressed {
+  -fx-transition: all 0.08s ease-in-out;
+  -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 6, 0, 0, 2);
+}
+
+.notification-toast {
+  -fx-transition: opacity 0.3s ease-out, translate-y 0.3s ease-out;
+}
+
+.notification-close-button {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.table-row-cell {
+  -fx-transition: background-color 0.2s ease-out, translate-y 0.2s ease-out;
+}
+
+.table-row-cell:hover {
+  -fx-transition: background-color 0.15s ease-in, translate-y 0.15s ease-in;
+}
+
+.text-field,
+.text-area,
+.combo-box,
+.date-picker {
+  -fx-transition: border-color 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.text-field:focused,
+.text-area:focused,
+.combo-box:focused,
+.date-picker:focused {
+  -fx-transition: border-color 0.15s ease-in, background-color 0.15s ease-in;
+}
+
+.badge {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.task-dialog {
+  -fx-transition: opacity 0.25s ease-out, scale-x 0.25s ease-out, scale-y 0.25s ease-out;
+}
+
+.filter-popup {
+  -fx-transition: opacity 0.2s ease-out, translate-y 0.2s ease-out;
+}
+
+.scroll-bar .thumb {
+  -fx-transition: background-color 0.2s ease-out;
+}
+
+.scroll-bar .thumb:hover {
+  -fx-transition: background-color 0.15s ease-in;
+}
+
+.check-box .box {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.check-box:selected .box {
+  -fx-transition: all 0.15s ease-in;
+}
+
+.radio-button .radio {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.radio-button:selected .radio {
+  -fx-transition: all 0.15s ease-in;
+}
+
+.stat-card {
+  -fx-transition: all 0.3s ease-out;
+}
+
+.stat-card:hover {
+  -fx-transition: all 0.2s ease-in;
+}
+
+.upcoming-row {
+  -fx-transition: all 0.25s ease-out;
+}
+
+.upcoming-row:hover {
+  -fx-transition: all 0.18s ease-in;
+}
+
+.calendar-cell {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.calendar-cell:hover {
+  -fx-transition: all 0.15s ease-in;
+}
+
+.deadline-preview-item {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.deadline-preview-item:hover {
+  -fx-transition: all 0.15s ease-in;
+}
+
+.choice-box {
+  -fx-transition: all 0.2s ease-out;
+}
+
+.choice-box:hover {
+  -fx-transition: all 0.15s ease-in;
+}
+

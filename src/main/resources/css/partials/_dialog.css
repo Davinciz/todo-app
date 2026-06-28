@@ -1,15 +1,25 @@
-/* ===================== Dialog Form (create/edit task) ===================== */
+/* ===================== Dialog Form (create/edit task - Liquid Glass) ===================== */
 .task-dialog,
 .task-dialog > .content,
 .task-dialog .button-bar,
 .task-dialog .dialog-form {
-  -fx-background-color: -app-surface;
+  -fx-background-color: rgba(255, 255, 255, 0.85);
+}
+
+.dialog-pane {
+  -fx-background-color: rgba(255, 255, 255, 0.85);
+  -fx-background-radius: 20;
+  -fx-border-color: rgba(255, 255, 255, 0.50);
+  -fx-border-radius: 20;
+  -fx-border-width: 1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 40, 0, 0, 8);
+  -fx-padding: 24;
 }
 
 .dialog-pane .header-panel {
-  -fx-background-color: -app-elevated;
+  -fx-background-color: transparent;
 }
 
 .dialog-pane .content.label {
-  -fx-text-fill: -app-text-primary;
+  -fx-text-fill: #0D1117;
 }
